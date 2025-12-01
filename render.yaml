@@ -1,0 +1,43 @@
+# render.yaml (Updated for Free Tier)
+
+services:
+  # --- 1. Backend Service (Node/Express API) ---
+  - type: web
+    name: jobify-backend
+    env: node
+    rootDir: ./
+    # 🚨 CHANGE THIS TO USE THE FREE TIER/STARTER PLAN 🚨
+    plan: starter
+
+    buildCommand: "npm install"
+    startCommand: "node server.js"
+
+    envVars:
+      - key: MONGO_URL
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false
+      - key: NODE_ENV
+        value: production
+
+    healthCheckPath: /api/v1/jobs
+
+  # --- 2. Frontend Service (React/Vite Static Site) ---
+  - type: web
+    name: jobify-frontend
+    env: static
+    rootDir: client
+    plan: starter # Already correct for free tier (static sites)
+
+    buildCommand: "npm install && npm run build"
+    staticPublishPath: dist
+
+    envVars:
+      - key: VITE_BASE_URL
+        sync: false

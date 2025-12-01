@@ -1,0 +1,482 @@
+[
+  {
+    "company": "Roads & Infrastructure Department",
+    "position": "Pothole Repair - Main Street",
+    "jobLocation": "Worabe City Center",
+    "jobStatus": "pending",
+    "jobType": "construction",
+    "createdAt": "2025-11-20T08:00:00Z"
+  },
+  {
+    "company": "Water & Sanitation Office",
+    "position": "Water Pipeline Leak - Market Area",
+    "jobLocation": "Worabe Market",
+    "jobStatus": "pending",
+    "jobType": "water",
+    "createdAt": "2025-11-21T09:15:00Z"
+  },
+  {
+    "company": "Waste Management Unit",
+    "position": "Garbage Collection Delay - Residential Zone",
+    "jobLocation": "Kebele 01",
+    "jobStatus": "pending",
+    "jobType": "waste",
+    "createdAt": "2025-11-18T14:30:00Z"
+  },
+  {
+    "company": "Public Health Department",
+    "position": "Drainage Blockage - School Road",
+    "jobLocation": "Near Worabe Primary School",
+    "jobStatus": "pending",
+    "jobType": "sanitation",
+    "createdAt": "2025-11-15T11:00:00Z"
+  },
+  {
+    "company": "Electricity Authority",
+    "position": "Street Light Outage - Hospital Road",
+    "jobLocation": "Worabe Hospital Access Road",
+    "jobStatus": "pending",
+    "jobType": "electricity",
+    "createdAt": "2025-11-12T10:45:00Z"
+  },
+  {
+    "company": "Traffic Management",
+    "position": "Damaged Traffic Signal - Central Junction",
+    "jobLocation": "City Center Junction",
+    "jobStatus": "pending",
+    "jobType": "traffic",
+    "createdAt": "2025-11-10T16:20:00Z"
+  },
+  {
+    "company": "Environmental Protection",
+    "position": "Illegal Dumping - River Bank",
+    "jobLocation": "Silt'e River Bank",
+    "jobStatus": "pending",
+    "jobType": "environment",
+    "createdAt": "2025-11-05T08:50:00Z"
+  },
+  {
+    "company": "Public Works Department",
+    "position": "Sidewalk Damage - Commercial Area",
+    "jobLocation": "Main Commercial Street",
+    "jobStatus": "pending",
+    "jobType": "construction",
+    "createdAt": "2025-11-01T15:00:00Z"
+  },
+  {
+    "company": "Water & Sanitation Office",
+    "position": "Low Water Pressure - Residential Area",
+    "jobLocation": "Kebele 03",
+    "jobStatus": "pending",
+    "jobType": "water",
+    "createdAt": "2025-10-28T09:35:00Z"
+  },
+  {
+    "company": "Waste Management Unit",
+    "position": "Overflowing Public Bin - Market Square",
+    "jobLocation": "Central Market Square",
+    "jobStatus": "pending",
+    "jobType": "waste",
+    "createdAt": "2025-10-25T13:10:00Z"
+  },
+  {
+    "company": "Roads & Infrastructure Department",
+    "position": "Road Cracks - Industrial Zone",
+    "jobLocation": "Industrial Area Road",
+    "jobStatus": "pending",
+    "jobType": "construction",
+    "createdAt": "2025-10-20T08:00:00Z"
+  },
+  {
+    "company": "Public Health Department",
+    "position": "Mosquito Breeding Site - Stagnant Water",
+    "jobLocation": "Near Worabe Lake",
+    "jobStatus": "pending",
+    "jobType": "sanitation",
+    "createdAt": "2025-10-21T09:15:00Z"
+  },
+  {
+    "company": "Electricity Authority",
+    "position": "Power Fluctuation - Residential Block",
+    "jobLocation": "Kebele 02",
+    "jobStatus": "pending",
+    "jobType": "electricity",
+    "createdAt": "2025-10-18T14:30:00Z"
+  },
+  {
+    "company": "Traffic Management",
+    "position": "Missing Road Sign - School Zone",
+    "jobLocation": "Worabe High School Area",
+    "jobStatus": "pending",
+    "jobType": "traffic",
+    "createdAt": "2025-10-15T11:00:00Z"
+  },
+  {
+    "company": "Environmental Protection",
+    "position": "Air Pollution - Industrial Emissions",
+    "jobLocation": "Industrial Zone",
+    "jobStatus": "pending",
+    "jobType": "environment",
+    "createdAt": "2025-10-12T10:45:00Z"
+  },
+  {
+    "company": "Public Works Department",
+    "position": "Bridge Maintenance - River Crossing",
+    "jobLocation": "Silt'e River Bridge",
+    "jobStatus": "pending",
+    "jobType": "construction",
+    "createdAt": "2025-10-10T16:20:00Z"
+  },
+  {
+    "company": "Water & Sanitation Office",
+    "position": "Water Quality Concern - Public Tap",
+    "jobLocation": "Public Tap Station 05",
+    "jobStatus": "pending",
+    "jobType": "water",
+    "createdAt": "2025-10-05T08:50:00Z"
+  },
+  {
+    "company": "Waste Management Unit",
+    "position": "Recycling Bin Damage - Park Area",
+    "jobLocation": "City Park",
+    "jobStatus": "pending",
+    "jobType": "waste",
+    "createdAt": "2025-10-01T15:00:00Z"
+  },
+  {
+    "company": "Roads & Infrastructure Department",
+    "position": "Speed Bump Installation Request",
+    "jobLocation": "Residential Area Road",
+    "jobStatus": "pending",
+    "jobType": "construction",
+    "createdAt": "2025-09-28T09:35:00Z"
+  },
+  {
+    "company": "Public Health Department",
+    "position": "Public Toilet Maintenance",
+    "jobLocation": "Bus Station Facilities",
+    "jobStatus": "pending",
+    "jobType": "sanitation",
+    "createdAt": "2025-09-25T13:10:00Z"
+  },
+  {
+    "company": "Electricity Authority",
+    "position": "Electrical Pole Damage",
+    "jobLocation": "Main Power Line Route",
+    "jobStatus": "pending",
+    "jobType": "electricity",
+    "createdAt": "2025-09-20T08:00:00Z"
+  },
+  {
+    "company": "Traffic Management",
+    "position": "Pedestrian Crossing Marking Faded",
+    "jobLocation": "Market Access Road",
+    "jobStatus": "pending",
+    "jobType": "traffic",
+    "createdAt": "2025-09-21T09:15:00Z"
+  },
+  {
+    "company": "Environmental Protection",
+    "position": "Tree Planting Request - Public Space",
+    "jobLocation": "Community Center Grounds",
+    "jobStatus": "pending",
+    "jobType": "environment",
+    "createdAt": "2025-09-18T14:30:00Z"
+  },
+  {
+    "company": "Public Works Department",
+    "position": "Public Bench Repair - Park Area",
+    "jobLocation": "Central City Park",
+    "jobStatus": "pending",
+    "jobType": "construction",
+    "createdAt": "2025-09-15T11:00:00Z"
+  },
+  {
+    "company": "Water & Sanitation Office",
+    "position": "Water Meter Malfunction",
+    "jobLocation": "Residential Compound",
+    "jobStatus": "pending",
+    "jobType": "water",
+    "createdAt": "2025-09-12T10:45:00Z"
+  },
+  {
+    "company": "Waste Management Unit",
+    "position": "Medical Waste Disposal Concern",
+    "jobLocation": "Health Center Area",
+    "jobStatus": "pending",
+    "jobType": "waste",
+    "createdAt": "2025-09-10T16:20:00Z"
+  },
+  {
+    "company": "Roads & Infrastructure Department",
+    "position": "Flood Damage Repair - Access Road",
+    "jobLocation": "Low-lying Area Road",
+    "jobStatus": "pending",
+    "jobType": "construction",
+    "createdAt": "2025-09-05T08:50:00Z"
+  },
+  {
+    "company": "Public Health Department",
+    "position": "Rodent Infestation - Market Area",
+    "jobLocation": "Food Market Section",
+    "jobStatus": "pending",
+    "jobType": "sanitation",
+    "createdAt": "2025-09-01T15:00:00Z"
+  },
+  {
+    "company": "Electricity Authority",
+    "position": "Transformer Maintenance Required",
+    "jobLocation": "Power Substation Area",
+    "jobStatus": "pending",
+    "jobType": "electricity",
+    "createdAt": "2025-08-28T09:35:00Z"
+  },
+  {
+    "company": "Traffic Management",
+    "position": "Intersection Improvement Request",
+    "jobLocation": "Busy City Intersection",
+    "jobStatus": "pending",
+    "jobType": "traffic",
+    "createdAt": "2025-08-25T13:10:00Z"
+  },
+  {
+    "company": "Roads & Infrastructure Department",
+    "position": "Road Resurfacing - Commercial Street",
+    "jobLocation": "Main Business District",
+    "jobStatus": "interview",
+    "jobType": "construction",
+    "createdAt": "2025-08-20T08:00:00Z"
+  },
+  {
+    "company": "Water & Sanitation Office",
+    "position": "Water Treatment Plant Maintenance",
+    "jobLocation": "City Water Plant",
+    "jobStatus": "interview",
+    "jobType": "water",
+    "createdAt": "2025-08-21T09:15:00Z"
+  },
+  {
+    "company": "Waste Management Unit",
+    "position": "New Waste Collection Route Planning",
+    "jobLocation": "Expanded City Area",
+    "jobStatus": "interview",
+    "jobType": "waste",
+    "createdAt": "2025-08-18T14:30:00Z"
+  },
+  {
+    "company": "Public Health Department",
+    "position": "Public Sanitation Campaign",
+    "jobLocation": "City-wide",
+    "jobStatus": "interview",
+    "jobType": "sanitation",
+    "createdAt": "2025-08-15T11:00:00Z"
+  },
+  {
+    "company": "Electricity Authority",
+    "position": "Grid Upgrade Project",
+    "jobLocation": "Central Distribution Network",
+    "jobStatus": "interview",
+    "jobType": "electricity",
+    "createdAt": "2025-08-12T10:45:00Z"
+  },
+  {
+    "company": "Traffic Management",
+    "position": "Smart Traffic System Installation",
+    "jobLocation": "Major City Intersections",
+    "jobStatus": "interview",
+    "jobType": "traffic",
+    "createdAt": "2025-08-10T16:20:00Z"
+  },
+  {
+    "company": "Environmental Protection",
+    "position": "Urban Greening Initiative",
+    "jobLocation": "Public Spaces City-wide",
+    "jobStatus": "interview",
+    "jobType": "environment",
+    "createdAt": "2025-08-05T08:50:00Z"
+  },
+  {
+    "company": "Public Works Department",
+    "position": "Public Building Renovation",
+    "jobLocation": "Municipal Office Complex",
+    "jobStatus": "interview",
+    "jobType": "construction",
+    "createdAt": "2025-08-01T15:00:00Z"
+  },
+  {
+    "company": "Water & Sanitation Office",
+    "position": "Reservoir Cleaning Schedule",
+    "jobLocation": "Main Water Reservoir",
+    "jobStatus": "interview",
+    "jobType": "water",
+    "createdAt": "2025-07-28T09:35:00Z"
+  },
+  {
+    "company": "Waste Management Unit",
+    "position": "Recycling Program Expansion",
+    "jobLocation": "Residential Areas",
+    "jobStatus": "interview",
+    "jobType": "waste",
+    "createdAt": "2025-07-25T13:10:00Z"
+  },
+  {
+    "company": "Roads & Infrastructure Department",
+    "position": "Bridge Construction Project",
+    "jobLocation": "New Development Area",
+    "jobStatus": "declined",
+    "jobType": "construction",
+    "createdAt": "2025-07-20T11:00:00Z"
+  },
+  {
+    "company": "Water & Sanitation Office",
+    "position": "Water Pipeline Extension",
+    "jobLocation": "Outskirts Village",
+    "jobStatus": "declined",
+    "jobType": "water",
+    "createdAt": "2025-07-15T09:00:00Z"
+  },
+  {
+    "company": "Waste Management Unit",
+    "position": "Landfill Site Expansion",
+    "jobLocation": "Current Landfill Area",
+    "jobStatus": "declined",
+    "jobType": "waste",
+    "createdAt": "2025-07-10T14:00:00Z"
+  },
+  {
+    "company": "Public Health Department",
+    "position": "Public Restroom Construction",
+    "jobLocation": "Market Complex",
+    "jobStatus": "declined",
+    "jobType": "sanitation",
+    "createdAt": "2025-07-05T10:00:00Z"
+  },
+  {
+    "company": "Electricity Authority",
+    "position": "Solar Street Light Installation",
+    "jobLocation": "Remote Access Roads",
+    "jobStatus": "declined",
+    "jobType": "electricity",
+    "createdAt": "2025-07-01T12:30:00Z"
+  },
+  {
+    "company": "Traffic Management",
+    "position": "Roundabout Construction",
+    "jobLocation": "Busy Traffic Junction",
+    "jobStatus": "declined",
+    "jobType": "traffic",
+    "createdAt": "2025-06-25T15:15:00Z"
+  },
+  {
+    "company": "Environmental Protection",
+    "position": "Wetland Conservation Project",
+    "jobLocation": "City Wetland Area",
+    "jobStatus": "declined",
+    "jobType": "environment",
+    "createdAt": "2025-06-20T08:45:00Z"
+  },
+  {
+    "company": "Public Works Department",
+    "position": "Sports Complex Development",
+    "jobLocation": "Public Land Allocation",
+    "jobStatus": "declined",
+    "jobType": "construction",
+    "createdAt": "2025-06-15T11:20:00Z"
+  },
+  {
+    "company": "Water & Sanitation Office",
+    "position": "Water Purification System Upgrade",
+    "jobLocation": "Treatment Plant",
+    "jobStatus": "declined",
+    "jobType": "water",
+    "createdAt": "2025-06-10T09:55:00Z"
+  },
+  {
+    "company": "Waste Management Unit",
+    "position": "Waste-to-Energy Facility",
+    "jobLocation": "Industrial Zone",
+    "jobStatus": "declined",
+    "jobType": "waste",
+    "createdAt": "2025-06-05T13:40:00Z"
+  },
+  {
+    "company": "Roads & Infrastructure Department",
+    "position": "Highway Expansion Project",
+    "jobLocation": "Main Access Highway",
+    "jobStatus": "interview",
+    "jobType": "construction",
+    "createdAt": "2025-05-20T11:00:00Z"
+  },
+  {
+    "company": "Water & Sanitation Office",
+    "position": "Emergency Water Supply System",
+    "jobLocation": "Drought-prone Areas",
+    "jobStatus": "interview",
+    "jobType": "water",
+    "createdAt": "2025-05-15T09:00:00Z"
+  },
+  {
+    "company": "Waste Management Unit",
+    "position": "Hazardous Waste Management",
+    "jobLocation": "Industrial and Medical Facilities",
+    "jobStatus": "interview",
+    "jobType": "waste",
+    "createdAt": "2025-05-10T14:00:00Z"
+  },
+  {
+    "company": "Public Health Department",
+    "position": "Vector Control Program",
+    "jobLocation": "High-risk Areas",
+    "jobStatus": "interview",
+    "jobType": "sanitation",
+    "createdAt": "2025-05-05T10:00:00Z"
+  },
+  {
+    "company": "Electricity Authority",
+    "position": "Backup Power Systems Installation",
+    "jobLocation": "Critical Facilities",
+    "jobStatus": "interview",
+    "jobType": "electricity",
+    "createdAt": "2025-05-01T12:30:00Z"
+  },
+  {
+    "company": "Traffic Management",
+    "position": "Intelligent Transport System",
+    "jobLocation": "City-wide Implementation",
+    "jobStatus": "interview",
+    "jobType": "traffic",
+    "createdAt": "2025-04-25T15:15:00Z"
+  },
+  {
+    "company": "Environmental Protection",
+    "position": "Air Quality Monitoring Network",
+    "jobLocation": "Strategic City Locations",
+    "jobStatus": "interview",
+    "jobType": "environment",
+    "createdAt": "2025-04-20T08:45:00Z"
+  },
+  {
+    "company": "Public Works Department",
+    "position": "Disaster-resistant Infrastructure",
+    "jobLocation": "Flood-prone Zones",
+    "jobStatus": "interview",
+    "jobType": "construction",
+    "createdAt": "2025-04-15T11:20:00Z"
+  },
+  {
+    "company": "Water & Sanitation Office",
+    "position": "Water Conservation Awareness",
+    "jobLocation": "Community Centers",
+    "jobStatus": "interview",
+    "jobType": "water",
+    "createdAt": "2025-04-10T09:55:00Z"
+  },
+  {
+    "company": "Waste Management Unit",
+    "position": "Plastic Waste Reduction Campaign",
+    "jobLocation": "Schools and Markets",
+    "jobStatus": "interview",
+    "jobType": "waste",
+    "createdAt": "2025-04-05T13:40:00Z"
+  }
+]
