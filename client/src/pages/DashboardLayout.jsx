@@ -118,12 +118,12 @@ const DashboardLayout = ({
     >
       <Wrapper>
         <main className="dashboard">
-          <SmallSidebar />
-          <BigSidebar />
+          {/* Render SmallSidebar only on mobile, BigSidebar only on desktop */}
+          {window.innerWidth < 992 ? <SmallSidebar /> : <BigSidebar />}
+
           <div>
             <Navbar />
             <div className="dashboard-page">
-              {/* Pass the user object to the Outlet context for nested routes */}
               {isPageLoading ? <Loading /> : <Outlet context={{ user }} />}
             </div>
           </div>
