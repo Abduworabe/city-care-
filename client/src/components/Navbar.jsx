@@ -52,6 +52,9 @@ const Navbar = () => {
             <div className="toggle-glow"></div>
           </button>
         </div>
+        <div className="center ">
+          <h3>Dashboard</h3>
+        </div>
 
         {/* RIGHT SECTION: User Controls */}
         <div className="nav-right">
