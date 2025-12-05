@@ -44,10 +44,6 @@ const SmallSidebar = () => {
           {/* Logo */}
           <div className="logo-section-small">
             <Logo />
-            <div className="logo-text-small">
-              <span className="logo-main">Dashboard</span>
-              <span className="logo-sub">Mobile</span>
-            </div>
           </div>
 
           {/* Navigation */}
