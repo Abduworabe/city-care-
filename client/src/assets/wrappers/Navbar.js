@@ -671,65 +671,7 @@ const Wrapper = styled.nav`
       }
     }
   }
-  // In your styled component, update the following styles:
 
-  .user-avatar-wrapper {
-    position: relative;
-    width: 40px;
-    height: 40px;
-    display: flex; // Add this
-    align-items: center; // Add this
-    justify-content: center; // Add this
-  }
-
-  .user-avatar-img {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    object-fit: cover; // This should already be there
-    border: 2px solid #ff6000;
-    box-shadow: 0 0 20px rgba(255, 96, 0, 0.4);
-    transition: transform 0.3s ease;
-    display: block; // Add this to ensure proper display
-  }
-
-  .avatar-fallback {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #ff6000, #ffcc00);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 2px solid #ff6000;
-    box-shadow: 0 0 20px rgba(255, 96, 0, 0.4);
-    transition: transform 0.3s ease;
-    overflow: hidden; // Add this
-  }
-
-  // Also update the dropdown avatar:
-  .dropdown-avatar {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #ff6000, #ffcc00);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 1.8rem;
-    border: 2px solid #ff6000;
-    box-shadow: 0 0 20px rgba(255, 96, 0, 0.4);
-    overflow: hidden; // Add this
-
-    img {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      object-fit: cover;
-      display: block; // Add this
-    }
-  }
   /* Animations */
   @keyframes slideDown {
     from {

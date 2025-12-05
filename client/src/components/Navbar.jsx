@@ -52,12 +52,103 @@ const Navbar = () => {
             <div className="toggle-glow"></div>
           </button>
         </div>
-        <div className="center-dashboard-title">
-          <h3 className="dashboard-title">Dashboard</h3>
+
+        {/* CENTER SECTION: Search Bar */}
+        <div className="nav-center-section">
+          <div
+            className={`search-container ${searchOpen ? "search-open" : ""}`}
+          >
+            <FaSearch
+              className="search-icon"
+              onClick={() => setSearchOpen(!searchOpen)}
+            />
+            <input
+              type="text"
+              className="search-input"
+              placeholder="Search for anything..."
+              onFocus={() => setSearchOpen(true)}
+              onBlur={() => setTimeout(() => setSearchOpen(false), 300)}
+            />
+            {searchOpen && (
+              <div className="search-suggestions">Recent searches...</div>
+            )}
+          </div>
         </div>
 
         {/* RIGHT SECTION: User Controls */}
         <div className="nav-right">
+          {/* Theme Toggle */}
+          <button className="theme-toggle-btn" onClick={toggleTheme}>
+            {darkMode ? (
+              <FaSun className="theme-icon" />
+            ) : (
+              <FaMoon className="theme-icon" />
+            )}
+            <span className="theme-label">{darkMode ? "Light" : "Dark"}</span>
+          </button>
+
+          {/* Settings Button */}
+          <Link to="/dashboard/settings" className="settings-btn">
+            <FaCog />
+          </Link>
+
+          {/* Notifications */}
+          <div className="notifications-container">
+            <button className="notifications-btn" onClick={toggleNotifications}>
+              <FaBell />
+              <span className="notification-badge">3</span>
+            </button>
+
+            {showNotifications && (
+              <div className="notifications-dropdown">
+                <div className="notifications-header">
+                  <h3>Notifications</h3>
+                  <span className="clear-all">Clear All</span>
+                </div>
+                <div className="notifications-list">
+                  <div className="notification-item new">
+                    <div className="notification-icon">
+                      <div className="icon-bg success">!</div>
+                    </div>
+                    <div className="notification-content">
+                      <p className="notification-text">
+                        System update completed successfully
+                      </p>
+                      <span className="notification-time">2 min ago</span>
+                    </div>
+                  </div>
+                  <div className="notification-item new">
+                    <div className="notification-icon">
+                      <div className="icon-bg warning">!</div>
+                    </div>
+                    <div className="notification-content">
+                      <p className="notification-text">
+                        New user registration requires approval
+                      </p>
+                      <span className="notification-time">15 min ago</span>
+                    </div>
+                  </div>
+                  <div className="notification-item">
+                    <div className="notification-icon">
+                      <div className="icon-bg info">!</div>
+                    </div>
+                    <div className="notification-content">
+                      <p className="notification-text">
+                        Monthly report is ready for review
+                      </p>
+                      <span className="notification-time">1 hour ago</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="notifications-footer">
+                  <Link to="/dashboard/notifications">
+                    View All Notifications
+                  </Link>
+                </div>
+              </div>
+            )}
+          </div>
+
           {/* USER PROFILE DROPDOWN */}
           <div className="user-profile-container">
             <div className="user-profile" onClick={toggleDropdown}>
@@ -121,6 +212,29 @@ const Navbar = () => {
                     <span className="item-icon">⚙️</span>
                     <span className="item-text">Account Settings</span>
                   </Link>
+
+                  <Link
+                    to="/dashboard/billing"
+                    className="dropdown-item"
+                    onClick={() => setShowDropdown(false)}
+                  >
+                    <span className="item-icon">💳</span>
+                    <span className="item-text">Billing & Subscription</span>
+                  </Link>
+
+                  <div className="dropdown-divider"></div>
+
+                  <div className="dropdown-item">
+                    <span className="item-icon">🌙</span>
+                    <span className="item-text">Dark Mode</span>
+                    <div className="theme-switch">
+                      <div
+                        className={`switch-knob ${darkMode ? "dark" : "light"}`}
+                      ></div>
+                    </div>
+                  </div>
+
+                  <div className="dropdown-divider"></div>
 
                   <button
                     type="button"
