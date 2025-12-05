@@ -1,15 +1,6 @@
 import React, { useState } from "react";
 import Wrapper from "../assets/wrappers/Navbar";
-import {
-  FaAlignLeft,
-  FaUserCircle,
-  FaChevronDown,
-  FaBell,
-  FaSearch,
-  FaCog,
-  FaMoon,
-  FaSun,
-} from "react-icons/fa";
+import { FaAlignLeft, FaUserCircle, FaChevronDown } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { Logo, ThemeToggle } from "./index";
 import { useDashboardContext } from "../pages/DashboardLayout";
@@ -17,20 +8,9 @@ import { useDashboardContext } from "../pages/DashboardLayout";
 const Navbar = () => {
   const { toggleSidebar, user, logoutUser } = useDashboardContext();
   const [showDropdown, setShowDropdown] = useState(false);
-  const [showNotifications, setShowNotifications] = useState(false);
-  const [darkMode, setDarkMode] = useState(true);
-  const [searchOpen, setSearchOpen] = useState(false);
 
   const toggleDropdown = () => {
     setShowDropdown(!showDropdown);
-  };
-
-  const toggleNotifications = () => {
-    setShowNotifications(!showNotifications);
-  };
-
-  const toggleTheme = () => {
-    setDarkMode(!darkMode);
   };
 
   const handleLogout = () => {
@@ -41,212 +21,51 @@ const Navbar = () => {
   return (
     <Wrapper>
       <div className="nav-center">
-        {/* LEFT SECTION: Sidebar toggle + Logo */}
-        <div className="nav-left">
-          <button
-            type="button"
-            className="toggle-btn hamburger-only"
-            onClick={toggleSidebar}
-          >
-            <FaAlignLeft />
-            <div className="toggle-glow"></div>
-          </button>
+        {/* SIDEBAR TOGGLE BUTTON */}
+        <button type="button" className="toggle-btn" onClick={toggleSidebar}>
+          <FaAlignLeft />
+        </button>
+
+        {/* LOGO + TEXT */}
+        <div className="logo-section">
+          <h4 className="logo-text">dashboard</h4>
         </div>
 
-        {/* CENTER SECTION: Search Bar */}
-        <div className="nav-center-section">
-          <div
-            className={`search-container ${searchOpen ? "search-open" : ""}`}
-          >
-            <FaSearch
-              className="search-icon"
-              onClick={() => setSearchOpen(!searchOpen)}
-            />
-            <input
-              type="text"
-              className="search-input"
-              placeholder="Search for anything..."
-              onFocus={() => setSearchOpen(true)}
-              onBlur={() => setTimeout(() => setSearchOpen(false), 300)}
-            />
-            {searchOpen && (
-              <div className="search-suggestions">Recent searches...</div>
-            )}
-          </div>
-        </div>
-
-        {/* RIGHT SECTION: User Controls */}
-        <div className="nav-right">
-          {/* Theme Toggle */}
-          <button className="theme-toggle-btn" onClick={toggleTheme}>
-            {darkMode ? (
-              <FaSun className="theme-icon" />
-            ) : (
-              <FaMoon className="theme-icon" />
-            )}
-            <span className="theme-label">{darkMode ? "Light" : "Dark"}</span>
-          </button>
-
-          {/* Settings Button */}
-          <Link to="/dashboard/settings" className="settings-btn">
-            <FaCog />
-          </Link>
-
-          {/* Notifications */}
-          <div className="notifications-container">
-            <button className="notifications-btn" onClick={toggleNotifications}>
-              <FaBell />
-              <span className="notification-badge">3</span>
-            </button>
-
-            {showNotifications && (
-              <div className="notifications-dropdown">
-                <div className="notifications-header">
-                  <h3>Notifications</h3>
-                  <span className="clear-all">Clear All</span>
-                </div>
-                <div className="notifications-list">
-                  <div className="notification-item new">
-                    <div className="notification-icon">
-                      <div className="icon-bg success">!</div>
-                    </div>
-                    <div className="notification-content">
-                      <p className="notification-text">
-                        System update completed successfully
-                      </p>
-                      <span className="notification-time">2 min ago</span>
-                    </div>
-                  </div>
-                  <div className="notification-item new">
-                    <div className="notification-icon">
-                      <div className="icon-bg warning">!</div>
-                    </div>
-                    <div className="notification-content">
-                      <p className="notification-text">
-                        New user registration requires approval
-                      </p>
-                      <span className="notification-time">15 min ago</span>
-                    </div>
-                  </div>
-                  <div className="notification-item">
-                    <div className="notification-icon">
-                      <div className="icon-bg info">!</div>
-                    </div>
-                    <div className="notification-content">
-                      <p className="notification-text">
-                        Monthly report is ready for review
-                      </p>
-                      <span className="notification-time">1 hour ago</span>
-                    </div>
-                  </div>
-                </div>
-                <div className="notifications-footer">
-                  <Link to="/dashboard/notifications">
-                    View All Notifications
-                  </Link>
-                </div>
-              </div>
-            )}
-          </div>
+        {/* RIGHT SIDE BUTTONS */}
+        <div className="btn-container">
+          <ThemeToggle />
 
           {/* USER PROFILE DROPDOWN */}
-          <div className="user-profile-container">
-            <div className="user-profile" onClick={toggleDropdown}>
-              <div className="user-avatar-wrapper">
-                {user?.avatar ? (
-                  <img
-                    src={user.avatar}
-                    alt={user.name}
-                    className="user-avatar-img"
-                  />
-                ) : (
-                  <div className="avatar-fallback">
-                    <FaUserCircle className="user-icon" />
-                  </div>
-                )}
-                <div className="status-indicator online"></div>
-              </div>
-
-              <div className="user-info">
-                <span className="user-name">{user?.name || "User"}</span>
-                <span className="user-role">{user?.role || "Member"}</span>
-              </div>
-
-              <FaChevronDown
-                className={`down-icon ${showDropdown ? "rotate" : ""}`}
+          <div className="user-profile" onClick={toggleDropdown}>
+            {user?.avatar ? (
+              <img
+                src={user.avatar}
+                alt={user.name}
+                className="img user-avatar-img"
               />
-
-              {/* Dropdown Menu */}
-              {showDropdown && (
-                <div className="dropdown-menu">
-                  <div className="dropdown-header">
-                    <div className="dropdown-avatar">
-                      {user?.avatar ? (
-                        <img src={user.avatar} alt={user.name} />
-                      ) : (
-                        <FaUserCircle />
-                      )}
-                    </div>
-                    <div className="dropdown-user-info">
-                      <h4>{user?.name}</h4>
-                      <p>{user?.email}</p>
-                    </div>
-                  </div>
-
-                  <div className="dropdown-divider"></div>
-
-                  <Link
-                    to="/dashboard/profile"
-                    className="dropdown-item"
-                    onClick={() => setShowDropdown(false)}
-                  >
-                    <span className="item-icon">👤</span>
-                    <span className="item-text">My Profile</span>
-                  </Link>
-
-                  <Link
-                    to="/dashboard/settings"
-                    className="dropdown-item"
-                    onClick={() => setShowDropdown(false)}
-                  >
-                    <span className="item-icon">⚙️</span>
-                    <span className="item-text">Account Settings</span>
-                  </Link>
-
-                  <Link
-                    to="/dashboard/billing"
-                    className="dropdown-item"
-                    onClick={() => setShowDropdown(false)}
-                  >
-                    <span className="item-icon">💳</span>
-                    <span className="item-text">Billing & Subscription</span>
-                  </Link>
-
-                  <div className="dropdown-divider"></div>
-
-                  <div className="dropdown-item">
-                    <span className="item-icon">🌙</span>
-                    <span className="item-text">Dark Mode</span>
-                    <div className="theme-switch">
-                      <div
-                        className={`switch-knob ${darkMode ? "dark" : "light"}`}
-                      ></div>
-                    </div>
-                  </div>
-
-                  <div className="dropdown-divider"></div>
-
-                  <button
-                    type="button"
-                    className="dropdown-item logout"
-                    onClick={handleLogout}
-                  >
-                    <span className="item-icon">🚪</span>
-                    <span className="item-text">Logout</span>
-                  </button>
-                </div>
-              )}
-            </div>
+            ) : (
+              <FaUserCircle className="user-icon" />
+            )}
+            <span className="user-name">{user?.name}</span>
+            <FaChevronDown className="down-icon" />
+            {showDropdown && (
+              <div className="dropdown show-dropdown">
+                <Link
+                  to="/dashboard/profile"
+                  className="dropdown-link"
+                  onClick={() => setShowDropdown(false)}
+                >
+                  Profile
+                </Link>
+                <button
+                  type="button"
+                  className="dropdown-btn"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>
