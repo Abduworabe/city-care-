@@ -53,9 +53,39 @@ const Navbar = () => {
           </button>
         </div>
 
+        {/* CENTER SECTION: Search Bar */}
+        <div className="nav-center-section">
+          <div
+            className={`search-container ${searchOpen ? "search-open" : ""}`}
+          >
+            <FaSearch
+              className="search-icon"
+              onClick={() => setSearchOpen(!searchOpen)}
+            />
+            <input
+              type="text"
+              className="search-input"
+              placeholder="Search for anything..."
+              onFocus={() => setSearchOpen(true)}
+              onBlur={() => setTimeout(() => setSearchOpen(false), 300)}
+            />
+            {searchOpen && (
+              <div className="search-suggestions">Recent searches...</div>
+            )}
+          </div>
+        </div>
+
         {/* RIGHT SECTION: User Controls */}
         <div className="nav-right">
           {/* Theme Toggle */}
+          <button className="theme-toggle-btn" onClick={toggleTheme}>
+            {darkMode ? (
+              <FaSun className="theme-icon" />
+            ) : (
+              <FaMoon className="theme-icon" />
+            )}
+            <span className="theme-label">{darkMode ? "Light" : "Dark"}</span>
+          </button>
 
           {/* Settings Button */}
           <Link to="/dashboard/settings" className="settings-btn">
@@ -119,21 +149,104 @@ const Navbar = () => {
             )}
           </div>
 
-          {/* User Profile */}
+          {/* USER PROFILE DROPDOWN */}
           <div className="user-profile-container">
-            <button className="user-btn" onClick={toggleDropdown}>
-              <div className="user-avatar">
+            <div className="user-profile" onClick={toggleDropdown}>
+              <div className="user-avatar-wrapper">
                 {user?.avatar ? (
                   <img
                     src={user.avatar}
                     alt={user.name}
-                    className="avatar-img"
+                    className="user-avatar-img"
                   />
                 ) : (
-                  <FaUserCircle className="avatar-fallback" />
+                  <div className="avatar-fallback">
+                    <FaUserCircle className="user-icon" />
+                  </div>
                 )}
+                <div className="status-indicator online"></div>
               </div>
-            </button>
+
+              <div className="user-info">
+                <span className="user-name">{user?.name || "User"}</span>
+                <span className="user-role">{user?.role || "Member"}</span>
+              </div>
+
+              <FaChevronDown
+                className={`down-icon ${showDropdown ? "rotate" : ""}`}
+              />
+
+              {/* Dropdown Menu */}
+              {showDropdown && (
+                <div className="dropdown-menu">
+                  <div className="dropdown-header">
+                    <div className="dropdown-avatar">
+                      {user?.avatar ? (
+                        <img src={user.avatar} alt={user.name} />
+                      ) : (
+                        <FaUserCircle />
+                      )}
+                    </div>
+                    <div className="dropdown-user-info">
+                      <h4>{user?.name}</h4>
+                      <p>{user?.email}</p>
+                    </div>
+                  </div>
+
+                  <div className="dropdown-divider"></div>
+
+                  <Link
+                    to="/dashboard/profile"
+                    className="dropdown-item"
+                    onClick={() => setShowDropdown(false)}
+                  >
+                    <span className="item-icon">👤</span>
+                    <span className="item-text">My Profile</span>
+                  </Link>
+
+                  <Link
+                    to="/dashboard/settings"
+                    className="dropdown-item"
+                    onClick={() => setShowDropdown(false)}
+                  >
+                    <span className="item-icon">⚙️</span>
+                    <span className="item-text">Account Settings</span>
+                  </Link>
+
+                  <Link
+                    to="/dashboard/billing"
+                    className="dropdown-item"
+                    onClick={() => setShowDropdown(false)}
+                  >
+                    <span className="item-icon">💳</span>
+                    <span className="item-text">Billing & Subscription</span>
+                  </Link>
+
+                  <div className="dropdown-divider"></div>
+
+                  <div className="dropdown-item">
+                    <span className="item-icon">🌙</span>
+                    <span className="item-text">Dark Mode</span>
+                    <div className="theme-switch">
+                      <div
+                        className={`switch-knob ${darkMode ? "dark" : "light"}`}
+                      ></div>
+                    </div>
+                  </div>
+
+                  <div className="dropdown-divider"></div>
+
+                  <button
+                    type="button"
+                    className="dropdown-item logout"
+                    onClick={handleLogout}
+                  >
+                    <span className="item-icon">🚪</span>
+                    <span className="item-text">Logout</span>
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
