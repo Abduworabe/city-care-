@@ -41,51 +41,11 @@ const Navbar = () => {
   return (
     <Wrapper>
       <div className="nav-center">
-        {/* LEFT SECTION: Sidebar toggle + Logo */}
-        <div className="nav-left">
-          <button
-            type="button"
-            className="toggle-btn hamburger-only"
-            onClick={toggleSidebar}
-          >
-            <FaAlignLeft />
-            <div className="toggle-glow"></div>
-          </button>
-        </div>
-
         {/* CENTER SECTION: Search Bar */}
-        <div className="nav-center-section">
-          <div
-            className={`search-container ${searchOpen ? "search-open" : ""}`}
-          >
-            <FaSearch
-              className="search-icon"
-              onClick={() => setSearchOpen(!searchOpen)}
-            />
-            <input
-              type="text"
-              className="search-input"
-              placeholder="Search for anything..."
-              onFocus={() => setSearchOpen(true)}
-              onBlur={() => setTimeout(() => setSearchOpen(false), 300)}
-            />
-            {searchOpen && (
-              <div className="search-suggestions">Recent searches...</div>
-            )}
-          </div>
-        </div>
 
         {/* RIGHT SECTION: User Controls */}
         <div className="nav-right">
           {/* Theme Toggle */}
-          <button className="theme-toggle-btn" onClick={toggleTheme}>
-            {darkMode ? (
-              <FaSun className="theme-icon" />
-            ) : (
-              <FaMoon className="theme-icon" />
-            )}
-            <span className="theme-label">{darkMode ? "Light" : "Dark"}</span>
-          </button>
 
           {/* Settings Button */}
           <Link to="/dashboard/settings" className="settings-btn">
