@@ -671,7 +671,27 @@ const Wrapper = styled.nav`
       }
     }
   }
-
+  .dashboard-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #ff9a3c;
+    background: linear-gradient(45deg, #ff9a3c, #ffcc00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 2px 10px rgba(255, 96, 0, 0.2);
+    shadow: 0 0 10px rgba(255, 154, 60, 0.5);
+    span {
+      margin-left: 0.5rem;
+    }
+    @media (max-width: 768px) {
+      font-size: 1rem;
+    }
+  }
+  .center-dashboard-title {
+    flex: 2;
+    text-align: center;
+  }
   /* Animations */
   @keyframes slideDown {
     from {
