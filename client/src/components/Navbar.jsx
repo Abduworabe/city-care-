@@ -119,15 +119,6 @@ const Navbar = () => {
                     <span className="item-text">Account Settings</span>
                   </Link>
 
-                  <Link
-                    to="/dashboard/billing"
-                    className="dropdown-item"
-                    onClick={() => setShowDropdown(false)}
-                  >
-                    <span className="item-icon">💳</span>
-                    <span className="item-text">Billing & Subscription</span>
-                  </Link>
-
                   <button
                     type="button"
                     className="dropdown-item logout"
