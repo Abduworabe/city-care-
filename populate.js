@@ -9,7 +9,7 @@ import User from "./models/UserModel.js";
 try {
   await mongoose.connect(process.env.MONGO_URL); // ⭐️ FIX: Use the correct email from your MongoDB list (kura1w@gmail.com) ⭐️
 
-  const user = await User.findOne({ email: "nimu@gmail.com" });
+  const user = await User.findOne({ email: "kura1w@gmail.com" });
 
   if (!user) {
     console.log("Error: Demo user not found in database. Cannot seed jobs.");
