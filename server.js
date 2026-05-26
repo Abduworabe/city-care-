@@ -50,6 +50,14 @@ app.use(express.static(path.resolve(__dirname, "./client/dist")));
 app.use(cookieParser());
 app.use(express.json());
 
+// --- Rate Limiting ---
+app.use(rateLimiter({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  limit: 100, // Limit each IP to 100 requests per windowMs
+  standardHeaders: 'draft-7',
+  legacyHeaders: false,
+}));
+
 // --- Router Middleware ---
 app.use("/api/v1/jobs", authenticateUser, jobRouter);
 app.use("/api/v1/users", authenticateUser, userRouter);
@@ -72,8 +80,13 @@ const port = process.env.PORT || 5100;
 
 try {
   await mongoose.connect(process.env.MONGO_URL);
-  app.listen(port, () => {});
+  console.log('✅ Database connected successfully');
+  
+  app.listen(port, () => {
+    console.log(`🚀 Server is running on port ${port}`);
+    console.log(`📍 Environment: ${process.env.NODE_ENV || 'development'}`);
+  });
 } catch (error) {
-  console.log(error);
+  console.log('❌ Failed to start server:', error);
   process.exit(1);
 }
