@@ -1,6 +1,6 @@
 import React from "react";
 import Wrapper from "../assets/wrappers/SmallSidebar";
-import { FaTimes, FaUserCircle, FaBolt } from "react-icons/fa";
+import { FaTimes, FaUserCircle } from "react-icons/fa";
 import { Logo } from "./index";
 import NavLinks from "./NavLinks";
 import { useDashboardContext } from "../pages/DashboardLayout";
@@ -10,33 +10,33 @@ const SmallSidebar = () => {
 
   return (
     <Wrapper>
-      <div
-        className={
-          showSidebar ? "sidebar-container show-sidebar" : "sidebar-container"
-        }
-      >
-        <div className="sidebar-overlay" onClick={toggleSidebar}></div>
+      <div className={showSidebar ? "sidebar-container show-sidebar" : "sidebar-container"}>
+        {/* Overlay — click to close */}
+        <div className="sidebar-overlay" onClick={toggleSidebar} />
+
+        {/* Sidebar Panel */}
         <div className="content">
           {/* Header */}
           <div className="sidebar-header">
             <div className="user-quick-info">
               <div className="user-avatar-small">
                 {user?.avatar ? (
-                  <img
-                    src={user.avatar}
-                    alt={user.name}
-                    className="avatar-img-small"
-                  />
+                  <img src={user.avatar} alt={user.name} className="avatar-img-small" />
                 ) : (
                   <FaUserCircle className="avatar-icon-small" />
                 )}
               </div>
               <div className="user-details">
-                <h4 className="user-greeting">Welcome back!</h4>
+                <p className="user-greeting">Welcome back!</p>
                 <p className="user-name-small">{user?.name || "User"}</p>
               </div>
             </div>
-            <button type="button" className="close-btn" onClick={toggleSidebar}>
+            <button
+              type="button"
+              className="close-btn"
+              onClick={toggleSidebar}
+              aria-label="Close menu"
+            >
               <FaTimes />
             </button>
           </div>
@@ -46,33 +46,17 @@ const SmallSidebar = () => {
             <Logo />
           </div>
 
-          {/* Navigation */}
-          <div className="nav-section">
-            <div className="nav-header">
-              <FaBolt className="bolt-icon" />
-              <h3 className="nav-title">Quick Menu</h3>
-            </div>
-            <NavLinks toggleSidebar={toggleSidebar} />
-          </div>
-
-          {/* Quick Actions */}
-          <div className="quick-actions">
-            <button className="action-btn primary">
-              <span>New Project</span>
-            </button>
-            <button className="action-btn secondary">
-              <span>Quick Report</span>
-            </button>
-          </div>
+          {/* Navigation Links */}
+          <nav className="nav-section">
+            <p className="nav-title">Navigation</p>
+            <NavLinks isBigSidebar={false} />
+          </nav>
 
           {/* Footer */}
           <div className="mobile-footer">
             <div className="connection-status">
-              <div className="status-dot connected"></div>
+              <div className="status-dot connected" />
               <span>Connected</span>
-            </div>
-            <div className="version-info">
-              <span>v2.5.1</span>
             </div>
           </div>
         </div>

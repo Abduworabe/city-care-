@@ -1,10 +1,11 @@
 import { FaSuitcaseRolling, FaCalendarCheck } from "react-icons/fa";
-
 import { useLoaderData, redirect } from "react-router-dom";
 import customFetch from "../utils/customFetch";
 import Wrapper from "../assets/wrappers/StatsContainer";
 import { toast } from "react-toastify";
 import { StatItem } from "../components";
+import { useSettings } from "../context/SettingsContext";
+
 export const loader = async () => {
   try {
     const response = await customFetch.get("/users/admin/app-stats");
@@ -17,24 +18,18 @@ export const loader = async () => {
 
 const Admin = () => {
   const { users, jobs } = useLoaderData();
+  const { t } = useSettings();
 
   return (
     <Wrapper>
-      <StatItem
-        title="current users"
-        count={users}
-        color="#e9b949"
-        bcg="#fcefc7"
-        icon={<FaSuitcaseRolling />}
-      />
-      <StatItem
-        title="total jobs"
-        count={jobs}
-        color="#647acb"
-        bcg="#e0e8f9"
-        icon={<FaCalendarCheck />}
-      />
+      <div className="stats-grid">
+        <StatItem title={t.current_users} count={users}
+          color="#e9b949" bcg="#fcefc7" icon={<FaSuitcaseRolling />} />
+        <StatItem title={t.total_jobs}    count={jobs}
+          color="#647acb" bcg="#e0e8f9" icon={<FaCalendarCheck />} />
+      </div>
     </Wrapper>
   );
 };
+
 export default Admin;

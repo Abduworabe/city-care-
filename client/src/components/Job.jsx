@@ -5,23 +5,17 @@ import JobInfo from "./JobInfo";
 import { Form } from "react-router-dom";
 import day from "dayjs";
 import advancedFormat from "dayjs/plugin/advancedFormat";
+import { useSettings } from "../context/SettingsContext";
 day.extend(advancedFormat);
 
-const Job = ({
-  _id,
-  position,
-  company,
-  jobLocation,
-  jobType,
-  createdAt,
-  jobStatus,
-}) => {
+const Job = ({ _id, position, company, jobLocation, jobType, createdAt, jobStatus }) => {
   const date = day(createdAt).format("MMM Do, YYYY");
+  const { t } = useSettings();
 
   return (
     <Wrapper>
       <header>
-        <div className="main-icon">{company?.charAt(0) || "D"}</div>
+        <div className="main-icon">{company?.charAt(0) || "W"}</div>
         <div className="info">
           <h5>{position}</h5>
           <p>{company}</p>
@@ -30,19 +24,15 @@ const Job = ({
       <div className="content">
         <div className="content-center">
           <JobInfo icon={<FaMapMarkerAlt />} text={jobLocation} />
-          <JobInfo icon={<FaCalendarAlt />} text={date} />
-          <JobInfo icon={<FaBuilding />} text={jobType} />
+          <JobInfo icon={<FaCalendarAlt />}  text={date} />
+          <JobInfo icon={<FaBuilding />}     text={jobType} />
           <div className={`status ${jobStatus}`}>{jobStatus}</div>
         </div>
       </div>
       <footer className="actions">
-        <Link to={`../edit-job/${_id}`} className="btn edit-btn">
-          Update
-        </Link>
+        <Link to={`../edit-job/${_id}`} className="btn edit-btn">{t.update}</Link>
         <Form method="post" action={`../delete-job/${_id}`}>
-          <button type="submit" className="btn delete-btn">
-            Delete
-          </button>
+          <button type="submit" className="btn delete-btn">{t.delete_btn}</button>
         </Form>
       </footer>
     </Wrapper>

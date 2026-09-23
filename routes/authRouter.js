@@ -11,9 +11,9 @@ import {
 
 // ⭐️ Rate Limiter Configuration ⭐️
 const apiLimiter = rateLimiter({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 15, // Limit each IP to 15 requests per windowMs
-  message: { msg: "IP rate limit exceeded, retry in 15 minutes." },
+  windowMs: 1 * 60 * 1000, // 1 minute
+  max: 50, // 50 requests per minute per IP
+  message: { msg: "Too many requests, please try again in a minute." },
 });
 // -----------------------------------
 

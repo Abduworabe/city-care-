@@ -1,8 +1,8 @@
-// App.jsx - UPDATED
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import React, { useState, useEffect } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { SettingsProvider } from "./context/SettingsContext";
 
 import {
   HomeLayout,
@@ -81,7 +81,7 @@ function App() {
             // ✅ Dashboard index shows Stats by default
             {
               index: true,
-              element: <AddJob />,
+              element: <Stats />,
               loader: statsLoader(queryClient),
               errorElement: <ErrorElement />,
             },
@@ -89,10 +89,12 @@ function App() {
               path: "add-job",
               element: <AddJob />,
               action: addJobAction(queryClient),
+              errorElement: <ErrorElement />,
             },
             {
               path: "settings",
               element: <Settings />,
+              errorElement: <ErrorElement />,
             },
             {
               path: "stats",
@@ -111,6 +113,7 @@ function App() {
               element: <EditJob />,
               loader: editJobLoader(queryClient),
               action: editJobAction(queryClient),
+              errorElement: <ErrorElement />,
             },
             {
               path: "delete-job/:id",
@@ -120,11 +123,13 @@ function App() {
               path: "profile",
               element: <Profile />,
               action: profileAction(queryClient),
+              errorElement: <ErrorElement />,
             },
             {
               path: "admin",
               element: <Admin />,
               loader: adminLoader,
+              errorElement: <ErrorElement />,
             },
           ],
         },
@@ -134,8 +139,10 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
-      <ReactQueryDevtools initialIsOpen={false} />
+      <SettingsProvider onThemeChange={toggleDarkTheme} currentDark={isDarkThemeEnabled}>
+        <RouterProvider router={router} />
+        <ReactQueryDevtools initialIsOpen={false} />
+      </SettingsProvider>
     </QueryClientProvider>
   );
 }

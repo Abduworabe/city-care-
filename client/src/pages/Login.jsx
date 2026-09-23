@@ -1,16 +1,10 @@
-import React from "react";
-import {
-  Link,
-  Form,
-  redirect,
-  useNavigation,
-  useNavigate,
-} from "react-router-dom";
+import { Link, Form, redirect, useNavigation } from "react-router-dom";
 import Wrapper from "../assets/wrappers/RegisterAndLoginPage";
 import { FormRow, Logo } from "../components";
 import customFetch from "../utils/customFetch";
 import { toast } from "react-toastify";
 import ThreeDBackground from "../components/ThreeBackground";
+import { useSettings } from "../context/SettingsContext";
 
 export const action =
   (queryClient) =>
@@ -20,64 +14,35 @@ export const action =
     try {
       await customFetch.post("/auth/login", data);
       queryClient.invalidateQueries();
-      toast.success("Login successful");
+      toast.success("Welcome back!");
       return redirect("/dashboard");
     } catch (error) {
-      toast.error(error.response.data.msg);
+      toast.error(error?.response?.data?.msg || "Login failed. Please try again.");
       return error;
     }
   };
 
 const Login = () => {
   const navigation = useNavigation();
-  const navigate = useNavigate();
   const isSubmitting = navigation.state === "submitting";
-
-  const loginDemoUser = async () => {
-    const data = {
-      email: "nimu@gmail.com",
-      password: "nimu1234",
-    };
-    try {
-      await customFetch.post("/auth/login", data);
-      toast.success("Take a test drive!");
-      navigate("/dashboard");
-    } catch (error) {
-      toast.error(error?.response?.data?.msg);
-    }
-  };
+  const { t } = useSettings();
 
   return (
     <>
-      {/* ThreeDBackground as the background */}
       <ThreeDBackground />
-
       <Wrapper>
         <Form method="post" className="form">
           <Logo />
-          <h4>login</h4>
-          <FormRow type="email" name="email" />
-          <FormRow type="password" name="password" />
-          <button
-            type="submit"
-            className="btn btn-block"
-            disabled={isSubmitting}
-          >
-            {isSubmitting ? "submitting..." : "submit"}
-          </button>
-          <button
-            type="button"
-            className="btn btn-block"
-            onClick={loginDemoUser}
-            disabled={isSubmitting}
-          >
-            explore the app
+          <h4>{t.sign_in_title}</h4>
+          <p className="form-subtitle">{t.sign_in_subtitle}</p>
+          <FormRow type="email" name="email" labelText={t.email} placeholder={t.email_placeholder} />
+          <FormRow type="password" name="password" labelText={t.password} placeholder={t.password_placeholder} />
+          <button type="submit" className="btn btn-block" disabled={isSubmitting}>
+            {isSubmitting ? t.saving : t.sign_in_title}
           </button>
           <p>
-            Not a member yet?
-            <Link to="/register" className="member-btn">
-              Register
-            </Link>
+            {t.no_account}{" "}
+            <Link to="/register" className="member-btn">{t.register}</Link>
           </p>
         </Form>
       </Wrapper>

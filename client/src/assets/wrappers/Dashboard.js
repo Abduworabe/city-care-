@@ -4,37 +4,32 @@ const Wrapper = styled.section`
   .dashboard {
     display: grid;
     grid-template-columns: 1fr;
-    background: #fff; /* main background */
-    color: #101010; /* main text */
+    min-height: 100vh;
+    background: var(--background-color);
   }
 
   .dashboard-page {
-    width: 90vw;
+    width: 92%;
+    max-width: 1400px;
     margin: 0 auto;
-    padding: 2rem 0;
-    background: #fff; /* page background */
-    color: #101010; /* text color */
-  }
-
-  /* Example: headings inside dashboard */
-  h2,
-  h3,
-  h4 {
-    color: #101010;
-  }
-
-  /* Primary highlight class for buttons, borders, important text */
-  .highlight {
-    color: #ff6000;
+    padding: 2rem 0 3rem;
+    min-height: calc(100vh - var(--nav-height));
   }
 
   @media (min-width: 992px) {
     .dashboard {
-      grid-template-columns: auto 1fr; /* sidebar + content */
+      grid-template-columns: auto 1fr;
     }
 
     .dashboard-page {
       width: 90%;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .dashboard-page {
+      width: 95%;
+      padding: 1.25rem 0 2rem;
     }
   }
 `;

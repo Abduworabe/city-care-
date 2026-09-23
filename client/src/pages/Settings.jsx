@@ -1,419 +1,362 @@
 import React, { useState } from "react";
-import "./settings.css";
+import { useSettings } from "../context/SettingsContext";
+import { toast } from "react-toastify";
+import styled from "styled-components";
+
+const LANGUAGES = [
+  { value: "en", label: "English", flag: "🇬🇧" },
+  { value: "am", label: "አማርኛ (Amharic)", flag: "🇪🇹" },
+  { value: "or", label: "Afaan Oromo", flag: "🇪🇹" },
+  { value: "ti", label: "ትግርኛ (Tigrinya)", flag: "🇪🇹" },
+  { value: "so", label: "Somali", flag: "🇸🇴" },
+];
 
 const Settings = () => {
-  // States for settings
-  const [settings, setSettings] = useState({
-    emailNotifications: true,
-    smsNotifications: false,
-    pushNotifications: true,
-    theme: "light",
-    language: "en",
-    autoSave: true,
-    twoFactorAuth: false,
-    privacyMode: false,
-    fontSize: "medium",
-    dataSaving: false,
-  });
+  const { settings, updateSetting, saveSettings, resetSettings, t } = useSettings();
+  const [local, setLocal] = useState({ ...settings });
+  const [activeSection, setActiveSection] = useState("appearance");
+  const [showResetModal, setShowResetModal] = useState(false);
 
-  const [showSuccess, setShowSuccess] = useState(false);
-  const [showResetConfirm, setShowResetConfirm] = useState(false);
-
-  const handleChange = (setting, value) => {
-    setSettings((prev) => ({ ...prev, [setting]: value }));
-  };
+  const change = (key, value) => setLocal((prev) => ({ ...prev, [key]: value }));
 
   const handleSave = () => {
-    console.log("Settings saved:", settings);
-    setShowSuccess(true);
-    setTimeout(() => setShowSuccess(false), 3000);
+    saveSettings(local);
+    toast.success(t.saved_msg);
   };
 
   const handleReset = () => {
-    setSettings({
-      emailNotifications: true,
-      smsNotifications: false,
-      pushNotifications: true,
-      theme: "light",
-      language: "en",
-      autoSave: true,
-      twoFactorAuth: false,
-      privacyMode: false,
-      fontSize: "medium",
-      dataSaving: false,
-    });
-    setShowResetConfirm(false);
+    resetSettings();
+    setLocal({ language: "en", theme: "light", fontSize: "medium",
+      emailNotifications: true, smsNotifications: false, pushNotifications: true,
+      twoFactorAuth: false, privacyMode: false, autoSave: true, dataSaving: false });
+    setShowResetModal(false);
+    toast.success(t.saved_msg);
   };
 
-  const languageOptions = [
-    { value: "en", label: "English" },
-    { value: "am", label: "Amharic" },
-    { value: "or", label: "Afaan Oromo" },
-    { value: "ti", label: "Tigrinya" },
-    { value: "so", label: "Somali" },
-  ];
-
-  const themeOptions = [
-    { value: "light", label: "Light Mode", icon: "☀️" },
-    { value: "dark", label: "Dark Mode", icon: "🌙" },
-    { value: "system", label: "System Default", icon: "🖥️" },
-    { value: "auto", label: "Auto (Sunset)", icon: "🌆" },
-  ];
-
-  const fontSizeOptions = [
-    { value: "small", label: "Small" },
-    { value: "medium", label: "Medium" },
-    { value: "large", label: "Large" },
-    { value: "xlarge", label: "Extra Large" },
+  const navItems = [
+    { id: "appearance", icon: "🎨", label: t.nav_appearance },
+    { id: "language",   icon: "🌐", label: t.nav_language },
+    { id: "notifications", icon: "🔔", label: t.nav_notifications },
+    { id: "privacy",    icon: "🔒", label: t.nav_privacy },
+    { id: "data",       icon: "💾", label: t.nav_data },
   ];
 
   return (
-    <div className="settings-page" data-theme={settings.theme}>
+    <PageWrapper>
       {/* Header */}
-      <div className="settings-header">
-        <h1 className="settings-title">⚙️ Settings</h1>
-        <p className="settings-subtitle">
-          Customize your application experience
-        </p>
-      </div>
-
-      {/* Success Message */}
-      {showSuccess && (
-        <div className="success-message">
-          <span>✅</span>
-          Settings saved successfully!
+      <header className="s-header">
+        <div>
+          <h1 className="s-title">⚙️ {t.settings_title}</h1>
+          <p className="s-subtitle">{t.settings_subtitle}</p>
         </div>
-      )}
-
-      <div className="settings-container">
-        {/* Left Navigation */}
-        <div className="settings-sidebar">
-          <div className="sidebar-item active">
-            <span className="sidebar-icon">👤</span>
-            Account
-          </div>
-          <div className="sidebar-item">
-            <span className="sidebar-icon">🎨</span>
-            Appearance
-          </div>
-          <div className="sidebar-item">
-            <span className="sidebar-icon">🔔</span>
-            Notifications
-          </div>
-          <div className="sidebar-item">
-            <span className="sidebar-icon">🔒</span>
-            Privacy & Security
-          </div>
-          <div className="sidebar-item">
-            <span className="sidebar-icon">🌐</span>
-            Language & Region
-          </div>
-          <div className="sidebar-item">
-            <span className="sidebar-icon">💾</span>
-            Data & Storage
-          </div>
+        <div className="header-actions">
+          <button className="btn-reset" onClick={() => setShowResetModal(true)}>↺ {t.reset}</button>
+          <button className="btn-save"  onClick={handleSave}>💾 {t.save}</button>
         </div>
+      </header>
 
-        {/* Main Content */}
-        <div className="settings-content">
-          {/* ========== ACCOUNT SETTINGS ========== */}
-          <div className="settings-section">
-            <div className="section-header">
-              <h2 className="section-title">👤 Account Settings</h2>
-              <div className="section-description">
-                Manage your account preferences and security
-              </div>
-            </div>
-
-            <div className="settings-grid">
-              <div className="setting-item">
-                <div className="setting-info">
-                  <h3 className="setting-label">Email Notifications</h3>
-                  <p className="setting-description">
-                    Receive updates and announcements via email
-                  </p>
-                </div>
-                <label className="toggle-switch">
-                  <input
-                    type="checkbox"
-                    checked={settings.emailNotifications}
-                    onChange={(e) =>
-                      handleChange("emailNotifications", e.target.checked)
-                    }
-                  />
-                  <span className="toggle-slider"></span>
-                </label>
-              </div>
-
-              <div className="setting-item">
-                <div className="setting-info">
-                  <h3 className="setting-label">Two-Factor Authentication</h3>
-                  <p className="setting-description">
-                    Add an extra layer of security to your account
-                  </p>
-                </div>
-                <label className="toggle-switch">
-                  <input
-                    type="checkbox"
-                    checked={settings.twoFactorAuth}
-                    onChange={(e) =>
-                      handleChange("twoFactorAuth", e.target.checked)
-                    }
-                  />
-                  <span className="toggle-slider"></span>
-                </label>
-              </div>
-
-              <div className="setting-item">
-                <div className="setting-info">
-                  <h3 className="setting-label">Privacy Mode</h3>
-                  <p className="setting-description">
-                    Hide sensitive information in screenshots
-                  </p>
-                </div>
-                <label className="toggle-switch">
-                  <input
-                    type="checkbox"
-                    checked={settings.privacyMode}
-                    onChange={(e) =>
-                      handleChange("privacyMode", e.target.checked)
-                    }
-                  />
-                  <span className="toggle-slider"></span>
-                </label>
-              </div>
-            </div>
-          </div>
-
-          {/* ========== APPEARANCE ========== */}
-          <div className="settings-section">
-            <div className="section-header">
-              <h2 className="section-title">🎨 Appearance</h2>
-              <div className="section-description">
-                Customize how the application looks
-              </div>
-            </div>
-
-            <div className="settings-grid">
-              <div className="setting-item">
-                <div className="setting-info">
-                  <h3 className="setting-label">Theme</h3>
-                  <p className="setting-description">
-                    Choose your preferred color theme
-                  </p>
-                </div>
-                <div className="theme-selector">
-                  {themeOptions.map((themeOption) => (
-                    <button
-                      key={themeOption.value}
-                      className={`theme-option ${
-                        settings.theme === themeOption.value ? "active" : ""
-                      }`}
-                      onClick={() => handleChange("theme", themeOption.value)}
-                    >
-                      <span className="theme-icon">{themeOption.icon}</span>
-                      <span className="theme-label">{themeOption.label}</span>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div className="setting-item">
-                <div className="setting-info">
-                  <h3 className="setting-label">Font Size</h3>
-                  <p className="setting-description">
-                    Adjust the text size for better readability
-                  </p>
-                </div>
-                <div className="font-size-selector">
-                  {fontSizeOptions.map((size) => (
-                    <button
-                      key={size.value}
-                      className={`font-size-option ${
-                        settings.fontSize === size.value ? "active" : ""
-                      }`}
-                      onClick={() => handleChange("fontSize", size.value)}
-                    >
-                      {size.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* ========== NOTIFICATIONS ========== */}
-          <div className="settings-section">
-            <div className="section-header">
-              <h2 className="section-title">🔔 Notifications</h2>
-              <div className="section-description">
-                Configure how you receive notifications
-              </div>
-            </div>
-
-            <div className="settings-grid">
-              <div className="setting-item">
-                <div className="setting-info">
-                  <h3 className="setting-label">Push Notifications</h3>
-                  <p className="setting-description">
-                    Receive notifications even when the app is closed
-                  </p>
-                </div>
-                <label className="toggle-switch">
-                  <input
-                    type="checkbox"
-                    checked={settings.pushNotifications}
-                    onChange={(e) =>
-                      handleChange("pushNotifications", e.target.checked)
-                    }
-                  />
-                  <span className="toggle-slider"></span>
-                </label>
-              </div>
-
-              <div className="setting-item">
-                <div className="setting-info">
-                  <h3 className="setting-label">SMS Notifications</h3>
-                  <p className="setting-description">
-                    Receive important alerts via SMS
-                  </p>
-                </div>
-                <label className="toggle-switch">
-                  <input
-                    type="checkbox"
-                    checked={settings.smsNotifications}
-                    onChange={(e) =>
-                      handleChange("smsNotifications", e.target.checked)
-                    }
-                  />
-                  <span className="toggle-slider"></span>
-                </label>
-              </div>
-            </div>
-          </div>
-
-          {/* ========== LANGUAGE & REGION ========== */}
-          <div className="settings-section">
-            <div className="section-header">
-              <h2 className="section-title">🌐 Language & Region</h2>
-              <div className="section-description">
-                Set your preferred language and regional settings
-              </div>
-            </div>
-
-            <div className="settings-grid">
-              <div className="setting-item">
-                <div className="setting-info">
-                  <h3 className="setting-label">Language</h3>
-                  <p className="setting-description">
-                    Choose your preferred language
-                  </p>
-                </div>
-                <div className="custom-select">
-                  <select
-                    value={settings.language}
-                    onChange={(e) => handleChange("language", e.target.value)}
-                  >
-                    {languageOptions.map((lang) => (
-                      <option key={lang.value} value={lang.value}>
-                        {lang.label}
-                      </option>
-                    ))}
-                  </select>
-                  <span className="select-arrow">▼</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* ========== DATA & STORAGE ========== */}
-          <div className="settings-section">
-            <div className="section-header">
-              <h2 className="section-title">💾 Data & Storage</h2>
-              <div className="section-description">
-                Manage your data and storage preferences
-              </div>
-            </div>
-
-            <div className="settings-grid">
-              <div className="setting-item">
-                <div className="setting-info">
-                  <h3 className="setting-label">Auto-Save Complaints</h3>
-                  <p className="setting-description">
-                    Automatically save drafts of complaints
-                  </p>
-                </div>
-                <label className="toggle-switch">
-                  <input
-                    type="checkbox"
-                    checked={settings.autoSave}
-                    onChange={(e) => handleChange("autoSave", e.target.checked)}
-                  />
-                  <span className="toggle-slider"></span>
-                </label>
-              </div>
-
-              <div className="setting-item">
-                <div className="setting-info">
-                  <h3 className="setting-label">Data Saving Mode</h3>
-                  <p className="setting-description">
-                    Reduce data usage by loading lower quality images
-                  </p>
-                </div>
-                <label className="toggle-switch">
-                  <input
-                    type="checkbox"
-                    checked={settings.dataSaving}
-                    onChange={(e) =>
-                      handleChange("dataSaving", e.target.checked)
-                    }
-                  />
-                  <span className="toggle-slider"></span>
-                </label>
-              </div>
-            </div>
-          </div>
-
-          {/* Action Buttons */}
-          <div className="action-buttons">
+      <div className="s-body">
+        {/* Sidebar */}
+        <nav className="s-nav">
+          {navItems.map((item) => (
             <button
-              className="btn btn-secondary"
-              onClick={() => setShowResetConfirm(true)}
+              key={item.id}
+              className={`s-nav-item ${activeSection === item.id ? "active" : ""}`}
+              onClick={() => setActiveSection(item.id)}
             >
-              ↺ Reset to Default
+              <span className="s-nav-icon">{item.icon}</span>
+              <span className="s-nav-label">{item.label}</span>
             </button>
-            <button className="btn btn-primary" onClick={handleSave}>
-              💾 Save Changes
-            </button>
+          ))}
+        </nav>
+
+        {/* Content */}
+        <main className="s-content">
+
+          {/* ── APPEARANCE */}
+          {activeSection === "appearance" && (
+            <Section title={t.appearance_title} desc={t.appearance_desc}>
+              <SettingRow label={t.theme_label} desc={t.theme_desc}>
+                <div className="choice-group">
+                  <button className={`choice-btn ${local.theme === "light" ? "active" : ""}`}
+                    onClick={() => change("theme", "light")}>☀️ {t.theme_light}</button>
+                  <button className={`choice-btn ${local.theme === "dark" ? "active" : ""}`}
+                    onClick={() => change("theme", "dark")}>🌙 {t.theme_dark}</button>
+                </div>
+              </SettingRow>
+              <SettingRow label={t.font_label} desc={t.font_desc}>
+                <div className="choice-group">
+                  {["small","medium","large","xlarge"].map((s) => (
+                    <button key={s}
+                      className={`choice-btn ${local.fontSize === s ? "active" : ""}`}
+                      onClick={() => change("fontSize", s)}>
+                      {t[`font_${s}`]}
+                    </button>
+                  ))}
+                </div>
+              </SettingRow>
+            </Section>
+          )}
+
+          {/* ── LANGUAGE */}
+          {activeSection === "language" && (
+            <Section title={t.language_title} desc={t.language_desc}>
+              <div className="lang-grid">
+                {LANGUAGES.map((lang) => (
+                  <button key={lang.value}
+                    className={`lang-card ${local.language === lang.value ? "active" : ""}`}
+                    onClick={() => change("language", lang.value)}>
+                    <span className="lang-flag">{lang.flag}</span>
+                    <span className="lang-name">{lang.label}</span>
+                    {local.language === lang.value && <span className="lang-check">✓</span>}
+                  </button>
+                ))}
+              </div>
+            </Section>
+          )}
+
+          {/* ── NOTIFICATIONS */}
+          {activeSection === "notifications" && (
+            <Section title={t.notif_title} desc={t.notif_desc}>
+              <SettingRow label={t.email_notif} desc={t.email_notif_desc}>
+                <Toggle checked={local.emailNotifications}
+                  onChange={(v) => change("emailNotifications", v)} />
+              </SettingRow>
+              <SettingRow label={t.sms_notif} desc={t.sms_notif_desc}>
+                <Toggle checked={local.smsNotifications}
+                  onChange={(v) => change("smsNotifications", v)} />
+              </SettingRow>
+              <SettingRow label={t.push_notif} desc={t.push_notif_desc}>
+                <Toggle checked={local.pushNotifications}
+                  onChange={(v) => change("pushNotifications", v)} />
+              </SettingRow>
+            </Section>
+          )}
+
+          {/* ── PRIVACY */}
+          {activeSection === "privacy" && (
+            <Section title={t.privacy_title} desc={t.privacy_desc}>
+              <SettingRow label={t.two_factor} desc={t.two_factor_desc}>
+                <Toggle checked={local.twoFactorAuth}
+                  onChange={(v) => change("twoFactorAuth", v)} />
+              </SettingRow>
+              <SettingRow label={t.privacy_mode} desc={t.privacy_mode_desc}>
+                <Toggle checked={local.privacyMode}
+                  onChange={(v) => change("privacyMode", v)} />
+              </SettingRow>
+            </Section>
+          )}
+
+          {/* ── DATA */}
+          {activeSection === "data" && (
+            <Section title={t.data_title} desc={t.data_desc}>
+              <SettingRow label={t.auto_save} desc={t.auto_save_desc}>
+                <Toggle checked={local.autoSave}
+                  onChange={(v) => change("autoSave", v)} />
+              </SettingRow>
+              <SettingRow label={t.data_saving} desc={t.data_saving_desc}>
+                <Toggle checked={local.dataSaving}
+                  onChange={(v) => change("dataSaving", v)} />
+              </SettingRow>
+            </Section>
+          )}
+
+          <div className="bottom-actions">
+            <button className="btn-save" onClick={handleSave}>💾 {t.save}</button>
           </div>
-        </div>
+        </main>
       </div>
 
-      {/* Reset Confirmation Modal */}
-      {showResetConfirm && (
-        <div className="modal-overlay">
-          <div className="modal">
-            <h3 className="modal-title">Reset Settings?</h3>
-            <p className="modal-text">
-              This will reset all settings to their default values. This action
-              cannot be undone.
-            </p>
+      {/* Reset Modal */}
+      {showResetModal && (
+        <div className="modal-overlay" onClick={() => setShowResetModal(false)}>
+          <div className="modal" onClick={(e) => e.stopPropagation()}>
+            <h3>⚠️ {t.reset_confirm_title}</h3>
+            <p>{t.reset_confirm_msg}</p>
             <div className="modal-actions">
-              <button
-                className="btn btn-outline"
-                onClick={() => setShowResetConfirm(false)}
-              >
-                Cancel
-              </button>
-              <button className="btn btn-danger" onClick={handleReset}>
-                Reset All Settings
-              </button>
+              <button className="btn-cancel" onClick={() => setShowResetModal(false)}>{t.cancel}</button>
+              <button className="btn-danger" onClick={handleReset}>{t.reset_confirm_btn}</button>
             </div>
           </div>
         </div>
       )}
-    </div>
+    </PageWrapper>
   );
 };
+
+// ── Sub-components
+const Section = ({ title, desc, children }) => (
+  <div className="s-section">
+    <div className="s-section-head">
+      <h2>{title}</h2>
+      <p>{desc}</p>
+    </div>
+    <div className="s-section-body">{children}</div>
+  </div>
+);
+
+const SettingRow = ({ label, desc, children }) => (
+  <div className="setting-row">
+    <div className="setting-info">
+      <p className="setting-label">{label}</p>
+      <p className="setting-desc">{desc}</p>
+    </div>
+    <div className="setting-control">{children}</div>
+  </div>
+);
+
+const Toggle = ({ checked, onChange }) => (
+  <label className="toggle">
+    <input type="checkbox" checked={checked} onChange={(e) => onChange(e.target.checked)} />
+    <span className="toggle-track"><span className="toggle-thumb" /></span>
+  </label>
+);
+
+// ── Styles
+const PageWrapper = styled.div`
+  min-height: calc(100vh - var(--nav-height));
+  background: var(--background-color);
+  color: var(--text-color);
+  padding: 1.5rem;
+
+  .s-header {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem;
+    padding: 1.5rem 2rem;
+    background: linear-gradient(135deg, #0f0c29, #1a1a2e);
+    border-radius: 16px; border: 1px solid rgba(255,96,0,0.2);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  }
+  .s-title { color: white; font-size: clamp(1.3rem,3vw,1.9rem); font-weight: 800; margin: 0 0 0.3rem; }
+  .s-subtitle { color: rgba(255,255,255,0.6); font-size: 0.88rem; margin: 0; }
+  .header-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+
+  .s-body {
+    display: grid; grid-template-columns: 210px 1fr; gap: 1.5rem; align-items: start;
+    @media (max-width: 768px) { grid-template-columns: 1fr; }
+  }
+
+  .s-nav {
+    background: var(--background-secondary-color); border-radius: 14px;
+    padding: 0.5rem; border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-1); position: sticky; top: 1rem;
+    display: flex; flex-direction: column; gap: 0.25rem;
+    @media (max-width: 768px) { position: static; flex-direction: row; flex-wrap: wrap; gap: 0.35rem; }
+  }
+
+  .s-nav-item {
+    display: flex; align-items: center; gap: 0.7rem; padding: 0.75rem 1rem;
+    border-radius: 10px; border: none; background: transparent;
+    color: var(--text-secondary-color); font-size: 0.88rem; font-weight: 500;
+    cursor: pointer; transition: all 0.2s ease; text-align: left; width: 100%;
+    &:hover { background: rgba(255,96,0,0.08); color: var(--primary-accent); }
+    &.active { background: var(--primary-accent); color: white; font-weight: 600; }
+    .s-nav-icon { font-size: 1.05rem; flex-shrink: 0; }
+    @media (max-width: 768px) { width: auto; flex: 1; min-width: 80px; justify-content: center; font-size: 0.8rem; padding: 0.6rem 0.5rem; }
+    @media (max-width: 480px) { .s-nav-label { display: none; } .s-nav-icon { font-size: 1.3rem; } min-width: 44px; }
+  }
+
+  .s-content { display: flex; flex-direction: column; gap: 1.25rem; }
+
+  .s-section {
+    background: var(--background-secondary-color); border-radius: 16px;
+    padding: 1.5rem; border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-1); animation: fadeIn 0.3s ease;
+  }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+  .s-section-head { margin-bottom: 1.25rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border-color);
+    h2 { font-size: 1.05rem; font-weight: 700; color: var(--text-color); margin: 0 0 0.3rem; }
+    p  { font-size: 0.82rem; color: var(--text-secondary-color); margin: 0; }
+  }
+  .s-section-body { display: flex; flex-direction: column; gap: 0.85rem; }
+
+  .setting-row {
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    padding: 1rem 1.25rem; background: var(--background-color);
+    border-radius: 10px; border: 1px solid var(--border-color); transition: border-color 0.2s;
+    &:hover { border-color: var(--primary-accent); }
+    @media (max-width: 540px) { flex-direction: column; align-items: flex-start; }
+  }
+  .setting-info { flex: 1; min-width: 0;
+    .setting-label { font-size: 0.93rem; font-weight: 600; color: var(--text-color); margin: 0 0 0.2rem; }
+    .setting-desc  { font-size: 0.8rem; color: var(--text-secondary-color); margin: 0; line-height: 1.5; }
+  }
+  .setting-control { flex-shrink: 0; }
+
+  /* Toggle */
+  .toggle { position: relative; display: inline-block; cursor: pointer; }
+  .toggle input { position: absolute; opacity: 0; width: 0; height: 0; }
+  .toggle-track { display: block; width: 50px; height: 26px; background: var(--grey-300); border-radius: 13px; transition: background 0.25s; position: relative; }
+  .toggle input:checked ~ .toggle-track { background: var(--primary-accent); }
+  .toggle-thumb { position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; background: white; border-radius: 50%; transition: transform 0.25s; box-shadow: 0 1px 4px rgba(0,0,0,0.2); }
+  .toggle input:checked ~ .toggle-track .toggle-thumb { transform: translateX(24px); }
+  .toggle:focus-within .toggle-track { outline: 2px solid var(--primary-accent); outline-offset: 2px; }
+
+  /* Choice group */
+  .choice-group { display: flex; gap: 0.45rem; flex-wrap: wrap; }
+  .choice-btn {
+    padding: 0.5rem 1rem; border: 1.5px solid var(--border-color); border-radius: 8px;
+    background: var(--background-secondary-color); color: var(--text-secondary-color);
+    font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all 0.2s;
+    &:hover { border-color: var(--primary-accent); color: var(--primary-accent); }
+    &.active { background: var(--primary-accent); border-color: var(--primary-accent); color: white; font-weight: 600; }
+  }
+
+  /* Language grid */
+  .lang-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 0.75rem; }
+  .lang-card {
+    display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+    padding: 1rem 0.75rem; border: 1.5px solid var(--border-color); border-radius: 12px;
+    background: var(--background-color); color: var(--text-color); cursor: pointer;
+    transition: all 0.2s; position: relative;
+    &:hover { border-color: var(--primary-accent); transform: translateY(-2px); box-shadow: var(--shadow-2); }
+    &.active { border-color: var(--primary-accent); background: rgba(255,96,0,0.08); }
+    .lang-flag { font-size: 1.8rem; }
+    .lang-name { font-size: 0.82rem; font-weight: 500; text-align: center; }
+    .lang-check { position: absolute; top: 0.4rem; right: 0.6rem; color: var(--primary-accent); font-weight: 700; font-size: 0.9rem; }
+  }
+
+  .bottom-actions { display: flex; justify-content: flex-end; padding-top: 0.5rem; }
+
+  /* Buttons */
+  .btn-save {
+    padding: 0.65rem 1.5rem; background: var(--primary-accent); color: white;
+    border: none; border-radius: 10px; font-size: 0.9rem; font-weight: 600;
+    cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.4rem;
+    &:hover { background: #e05500; transform: translateY(-1px); box-shadow: 0 4px 14px rgba(255,96,0,0.35); }
+  }
+  .btn-reset {
+    padding: 0.65rem 1.25rem; background: transparent; color: rgba(255,255,255,0.75);
+    border: 1.5px solid rgba(255,255,255,0.25); border-radius: 10px; font-size: 0.85rem;
+    cursor: pointer; transition: all 0.2s;
+    &:hover { border-color: rgba(255,255,255,0.6); color: white; }
+  }
+  .btn-cancel {
+    padding: 0.6rem 1.25rem; background: var(--grey-100); color: var(--text-color);
+    border: 1.5px solid var(--border-color); border-radius: 8px; font-weight: 500; cursor: pointer;
+    &:hover { background: var(--grey-200); }
+  }
+  .btn-danger {
+    padding: 0.6rem 1.25rem; background: #dc2626; color: white; border: none;
+    border-radius: 8px; font-weight: 600; cursor: pointer;
+    &:hover { background: #b91c1c; }
+  }
+
+  /* Modal */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.55); backdrop-filter: blur(4px);
+    display: flex; align-items: center; justify-content: center; z-index: 9999; padding: 1rem;
+  }
+  .modal {
+    background: var(--background-secondary-color); border-radius: 16px; padding: 2rem;
+    max-width: 420px; width: 100%; box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    border: 1px solid var(--border-color); animation: popIn 0.22s ease;
+    h3 { font-size: 1.15rem; font-weight: 700; color: var(--text-color); margin: 0 0 0.75rem; }
+    p  { color: var(--text-secondary-color); font-size: 0.88rem; line-height: 1.6; margin: 0 0 1.5rem; }
+  }
+  @keyframes popIn { from { opacity:0; transform:scale(0.92); } to { opacity:1; transform:scale(1); } }
+  .modal-actions { display: flex; justify-content: flex-end; gap: 0.75rem; }
+`;
 
 export default Settings;

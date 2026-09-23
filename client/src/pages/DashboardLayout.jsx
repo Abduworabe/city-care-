@@ -42,8 +42,20 @@ const DashboardLayout = ({
   toggleDarkTheme,
   queryClient,
 }) => {
-  // ✅ Get the user object from the loader using useLoaderData()
-  const { user } = useLoaderData();
+  // ✅ useLoaderData gives initial data, but useQuery keeps it live/fresh
+  const initialData = useLoaderData();
+
+  // ✅ useQuery re-fetches whenever cache is invalidated (e.g. after profile update)
+  const { data } = useQuery({
+    queryKey: ["user"],
+    queryFn: async () => {
+      const { data } = await customFetch("/users/current-user");
+      return data;
+    },
+    initialData,
+  });
+
+  const user = data?.user || initialData?.user;
 
   const navigate = useNavigate();
   const navigation = useNavigation();
@@ -118,9 +130,8 @@ const DashboardLayout = ({
     >
       <Wrapper>
         <main className="dashboard">
-          {/* Render SmallSidebar only on mobile, BigSidebar only on desktop */}
-          {window.innerWidth < 992 ? <SmallSidebar /> : <BigSidebar />}
-
+          <SmallSidebar />
+          <BigSidebar />
           <div>
             <Navbar />
             <div className="dashboard-page">

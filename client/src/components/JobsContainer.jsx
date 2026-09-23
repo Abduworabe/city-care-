@@ -1,16 +1,18 @@
 import Job from "./Job";
 import Wrapper from "../assets/wrappers/JobsContainer";
-import { useAllJobsContext } from "../pages/AllJobs";
 import PageBtnContainer from "./PageBtnContainer";
+import { useAllJobsContext } from "../pages/AllJobs";
+import { useSettings } from "../context/SettingsContext";
 
 const JobsContainer = () => {
   const { data } = useAllJobsContext();
   const { jobs, totalJobs, numOfPages } = data;
+  const { t } = useSettings();
 
-  if (jobs.length === 0) {
+  if (!jobs || jobs.length === 0) {
     return (
       <Wrapper>
-        <h2>No complaints to display...</h2>
+        <h2>{t.no_complaints}</h2>
       </Wrapper>
     );
   }
@@ -18,18 +20,12 @@ const JobsContainer = () => {
   return (
     <Wrapper>
       <h5>
-        {totalJobs} complaint{jobs.length > 1 && "s"} found
+        {totalJobs} {t.nav_all_complaints}
       </h5>
       <div className="jobs">
-        {jobs.map((job) => {
-          return <Job key={job._id} {...job} className="job-card" />;
-        })}
+        {jobs.map((job) => <Job key={job._id} {...job} />)}
       </div>
-      {numOfPages > 1 && (
-        <div className="pagination-container">
-          <PageBtnContainer />
-        </div>
-      )}
+      {numOfPages > 1 && <PageBtnContainer />}
     </Wrapper>
   );
 };

@@ -1,9 +1,6 @@
-// src/components/SubmitBtn.jsx
-
-import React from "react";
 import { useNavigation } from "react-router-dom";
 
-const SubmitBtn = ({ formBtn }) => {
+const SubmitBtn = ({ formBtn, text = "submit" }) => {
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
 
@@ -13,9 +10,9 @@ const SubmitBtn = ({ formBtn }) => {
       className={`btn btn-block ${formBtn ? "form-btn" : ""}`}
       disabled={isSubmitting}
     >
-      {isSubmitting ? "submitting..." : "submit"}
+      {isSubmitting ? "Saving..." : text}
     </button>
   );
 };
 
-export default SubmitBtn; // Use default export if your index.js aggregates them
+export default SubmitBtn;
