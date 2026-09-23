@@ -12,6 +12,23 @@ export const register = async (req, res) => {
   req.body.password = hashedPassword;
 
   const user = await User.create(req.body);
+
+  // Notify all existing admins about the new registration (skip if first account)
+  if (!isFirstAccount) {
+    const { createNotification } = await import("../controllers/notificationController.js");
+    const admins = await User.find({ role: "admin" }).select("_id");
+    for (const admin of admins) {
+      await createNotification({
+        recipient: admin._id,
+        sender: user._id,
+        type: "new_user_registered",
+        title: "New Citizen Registered",
+        message: `${user.name} ${user.lastName} (${user.email}) has joined Worabe Municipality.`,
+        metadata: { userId: user._id },
+      });
+    }
+  }
+
   res.status(StatusCodes.CREATED).json({ msg: "user created" });
 };
 export const login = async (req, res) => {

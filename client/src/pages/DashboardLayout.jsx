@@ -1,17 +1,13 @@
 import Wrapper from "../assets/wrappers/Dashboard";
 import { Navbar, BigSidebar, SmallSidebar, Loading } from "../components";
-import { createContext, useContext, useState, useEffect } from "react"; // ⭐️ Import useEffect ⭐️
+import { createContext, useContext, useState, useEffect } from "react";
 import {
-  Outlet,
-  redirect,
-  useLoaderData,
-  useNavigate,
-  useNavigation,
+  Outlet, redirect, useLoaderData, useNavigate, useNavigation,
 } from "react-router-dom";
 import customFetch from "../utils/customFetch";
 import { useQuery } from "@tanstack/react-query";
-
 import { toast } from "react-toastify";
+import { NotificationProvider } from "../context/NotificationContext";
 
 // --- React Query User Fetch ---
 const userQuery = {
@@ -120,26 +116,25 @@ const DashboardLayout = ({
   return (
     <DashboardContext.Provider
       value={{
-        user,
-        showSidebar,
-        isDarkTheme,
+        user, showSidebar, isDarkTheme,
         toggleDarkTheme: handleToggleDarkTheme,
-        toggleSidebar,
-        logoutUser,
+        toggleSidebar, logoutUser,
       }}
     >
-      <Wrapper>
-        <main className="dashboard">
-          <SmallSidebar />
-          <BigSidebar />
-          <div>
-            <Navbar />
-            <div className="dashboard-page">
-              {isPageLoading ? <Loading /> : <Outlet context={{ user }} />}
+      <NotificationProvider>
+        <Wrapper>
+          <main className="dashboard">
+            <SmallSidebar />
+            <BigSidebar />
+            <div>
+              <Navbar />
+              <div className="dashboard-page">
+                {isPageLoading ? <Loading /> : <Outlet context={{ user }} />}
+              </div>
             </div>
-          </div>
-        </main>
-      </Wrapper>
+          </main>
+        </Wrapper>
+      </NotificationProvider>
     </DashboardContext.Provider>
   );
 };

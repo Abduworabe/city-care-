@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useDashboardContext } from "../pages/DashboardLayout";
 import { useSettings } from "../context/SettingsContext";
+import { useNotifications } from "../context/NotificationContext";
 import { userLinks, adminLinks } from "../utils/links";
 import { NavLink } from "react-router-dom";
 
@@ -17,12 +18,12 @@ const COLORS = [
 const NavLinks = ({ isBigSidebar }) => {
   const { user, toggleSidebar } = useDashboardContext();
   const { t } = useSettings();
+  const { unreadCount } = useNotifications();
   const isAdmin = user?.role === "admin";
   const links = isAdmin ? adminLinks : userLinks;
 
   return (
     <Wrapper>
-      {/* Role badge */}
       <div className={`role-badge ${isAdmin ? "admin" : "user"}`}>
         {isAdmin ? "⚙️ Admin" : "👤 Citizen"}
       </div>
@@ -41,6 +42,9 @@ const NavLinks = ({ isBigSidebar }) => {
               {React.cloneElement(link.icon, { style: { color: c.icon } })}
             </span>
             <span className="link-text">{t[link.text] || link.text}</span>
+            {link.badge && unreadCount > 0 && (
+              <span className="link-badge">{unreadCount > 99 ? "99+" : unreadCount}</span>
+            )}
           </NavLink>
         );
       })}
@@ -82,6 +86,11 @@ const Wrapper = styled.nav`
   }
 
   .link-text { font-size: 0.88rem; font-weight: 500; flex: 1; }
+
+  .link-badge {
+    background: #ef4444; color: white; font-size: 0.65rem; font-weight: 800;
+    padding: 0.1rem 0.4rem; border-radius: 10px; min-width: 18px; text-align: center;
+  }
 `;
 
 export default NavLinks;

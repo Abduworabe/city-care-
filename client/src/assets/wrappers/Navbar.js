@@ -158,7 +158,83 @@ const Wrapper = styled.nav`
     }
   }
 
-  /* ---- DROPDOWN ---- */
+  /* ── Bell ── */
+  .bell-container { position: relative; }
+
+  .bell-btn { position: relative; }
+
+  .bell-badge {
+    position: absolute; top: -6px; right: -6px;
+    background: #ef4444; color: white;
+    font-size: 0.65rem; font-weight: 800;
+    min-width: 18px; height: 18px; border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    padding: 0 4px; border: 2px solid #1a1a2e;
+    animation: pulse-badge 2s infinite;
+  }
+
+  @keyframes pulse-badge {
+    0%, 100% { transform: scale(1); }
+    50%       { transform: scale(1.15); }
+  }
+
+  .bell-dropdown {
+    position: absolute; top: calc(100% + 0.6rem); right: 0;
+    width: 320px; background: #1a1a2e;
+    border: 1px solid rgba(255,96,0,0.3); border-radius: 14px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.5); z-index: 9000;
+    overflow: hidden; animation: dropIn 0.2s ease;
+
+    @media (max-width: 420px) {
+      position: fixed; top: var(--nav-height, 64px);
+      right: 8px; left: 8px; width: auto;
+    }
+  }
+
+  .bell-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.85rem 1.1rem; border-bottom: 1px solid rgba(255,96,0,0.15);
+    color: white; font-size: 0.9rem; font-weight: 700;
+  }
+  .bell-action {
+    font-size: 0.75rem; font-weight: 600; padding: 0.3rem 0.65rem;
+    border-radius: 6px; cursor: pointer; border: none; transition: all 0.2s;
+    background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.7);
+    &:hover { background: rgba(255,255,255,0.15); color: white; }
+    &.primary { background: var(--primary-accent); color: white;
+      &:hover { background: #e05500; } }
+  }
+
+  .bell-empty {
+    padding: 1.5rem; text-align: center; color: rgba(255,255,255,0.5); font-size: 0.85rem;
+  }
+
+  .bell-item {
+    display: flex; align-items: flex-start; gap: 0.75rem;
+    padding: 0.85rem 1.1rem; cursor: pointer; transition: background 0.2s;
+    border-bottom: 1px solid rgba(255,255,255,0.05); position: relative;
+    &:last-child { border-bottom: none; }
+    &:hover { background: rgba(255,96,0,0.08); }
+    &.unread { background: rgba(255,96,0,0.05); }
+  }
+  .bell-item-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 0.1rem; }
+  .bell-item-body { flex: 1; min-width: 0; }
+  .bell-item-title {
+    font-size: 0.82rem; font-weight: 600; color: rgba(255,255,255,0.9);
+    margin: 0 0 0.2rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .bell-item-time { font-size: 0.72rem; color: rgba(255,255,255,0.45); margin: 0; }
+  .bell-dot {
+    width: 8px; height: 8px; border-radius: 50%; background: var(--primary-accent);
+    flex-shrink: 0; margin-top: 0.35rem;
+  }
+
+  /* Dropdown badge */
+  .dropdown-badge {
+    margin-left: auto; background: #ef4444; color: white;
+    font-size: 0.7rem; font-weight: 700; padding: 0.1rem 0.45rem;
+    border-radius: 10px; min-width: 18px; text-align: center;
+  }
   .dropdown {
     position: absolute;
     top: calc(100% + 0.6rem);

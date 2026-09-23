@@ -1,12 +1,10 @@
 import { nanoid } from "nanoid";
 import Job from "../models/JobModel.js";
+import User from "../models/UserModel.js";
 import { StatusCodes } from "http-status-codes";
 import mongoose from "mongoose";
 import day from "dayjs";
-let jobs = [
-  { id: nanoid(), company: "apple", position: "front-end developer" },
-  { id: nanoid(), company: "google", position: "back-end developer" },
-];
+import { createNotification } from "./notificationController.js";
 
 export const getAllJobs = async (req, res) => {
   const { search, jobStatus, jobType, sort } = req.query;
@@ -48,6 +46,21 @@ export const getAllJobs = async (req, res) => {
 export const createJob = async (req, res) => {
   req.body.createdBy = req.user.userId;
   const job = await Job.create(req.body);
+
+  // Notify all admins about the new complaint
+  const admins = await User.find({ role: "admin" }).select("_id");
+  for (const admin of admins) {
+    await createNotification({
+      recipient: admin._id,
+      sender: req.user.userId,
+      type: "complaint_submitted",
+      title: "New Complaint Submitted",
+      message: `A new complaint has been submitted: "${job.position}" in ${job.jobLocation}.`,
+      relatedJob: job._id,
+      metadata: { jobType: job.jobType, jobStatus: job.jobStatus },
+    });
+  }
+
   res.status(StatusCodes.CREATED).json({ job });
 };
 
@@ -58,9 +71,34 @@ export const getJob = async (req, res) => {
 };
 
 export const updateJob = async (req, res) => {
-  const updatedJob = await Job.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-  });
+  const oldJob = await Job.findById(req.params.id);
+  const updatedJob = await Job.findByIdAndUpdate(req.params.id, req.body, { new: true });
+
+  // If admin changed the status, notify the complaint owner
+  if (
+    req.user.role === "admin" &&
+    oldJob.jobStatus !== updatedJob.jobStatus &&
+    oldJob.createdBy
+  ) {
+    const statusMessages = {
+      "in progress": { title: "Your Complaint Is Being Processed", message: `Your complaint "${updatedJob.position}" is now in progress. The municipality is working on it.`, type: "status_updated" },
+      "resolved":    { title: "✅ Complaint Resolved", message: `Great news! Your complaint "${updatedJob.position}" has been resolved.`, type: "complaint_resolved" },
+      "closed":      { title: "Complaint Closed", message: `Your complaint "${updatedJob.position}" has been closed.`, type: "complaint_closed" },
+      "reported":    { title: "Complaint Status Updated", message: `Your complaint "${updatedJob.position}" status has been updated to: reported.`, type: "status_updated" },
+    };
+    const notifData = statusMessages[updatedJob.jobStatus];
+    if (notifData) {
+      await createNotification({
+        recipient: oldJob.createdBy,
+        sender: req.user.userId,
+        type: notifData.type,
+        title: notifData.title,
+        message: notifData.message,
+        relatedJob: updatedJob._id,
+        metadata: { oldStatus: oldJob.jobStatus, newStatus: updatedJob.jobStatus },
+      });
+    }
+  }
 
   res.status(StatusCodes.OK).json({ job: updatedJob });
 };

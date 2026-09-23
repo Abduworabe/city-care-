@@ -11,7 +11,11 @@ export const getCurrentUser = async (req, res) => {
   res.status(StatusCodes.OK).json({ user: userWithoutPassword });
 };
 
-// --- Get Application Stats (Admin only) ---
+// --- Get All Users (Admin only) ---
+export const getAllUsers = async (req, res) => {
+  const users = await User.find({ role: "user" }).select("name lastName email location avatar");
+  res.status(StatusCodes.OK).json({ users });
+};
 export const getApplicationStats = async (req, res) => {
   const users = await User.countDocuments();
   const jobs = await Job.countDocuments();

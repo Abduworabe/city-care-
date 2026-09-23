@@ -26,6 +26,7 @@ export const TRANSLATIONS = {
     nav_admin: "Admin Panel",
     nav_settings: "Settings",
     nav_dashboard: "Dashboard",
+    nav_notifications: "Notifications",
 
     // ── Navbar
     my_profile: "My Profile",
@@ -248,6 +249,7 @@ export const TRANSLATIONS = {
     nav_admin: "አስተዳዳሪ ፓናል",
     nav_settings: "ቅንብሮች",
     nav_dashboard: "ዳሽቦርድ",
+    nav_notifications: "ማሳወቂያዎች",
 
     // ── Navbar
     my_profile: "መገለጫዬ",

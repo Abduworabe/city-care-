@@ -5,19 +5,10 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { SettingsProvider } from "./context/SettingsContext";
 
 import {
-  HomeLayout,
-  Landing,
-  Register,
-  Login,
-  DashboardLayout,
-  Error,
-  AddJob,
-  EditJob,
-  Stats,
-  AllJobs,
-  Profile,
-  Admin,
+  HomeLayout, Landing, Register, Login, DashboardLayout,
+  Error, AddJob, EditJob, Stats, AllJobs, Profile, Admin,
 } from "./pages";
+import Notifications from "./pages/Notifications";
 
 // Actions and Loaders
 import { action as registerAction } from "./pages/Register";
@@ -123,6 +114,11 @@ function App() {
               path: "profile",
               element: <Profile />,
               action: profileAction(queryClient),
+              errorElement: <ErrorElement />,
+            },
+            {
+              path: "notifications",
+              element: <Notifications />,
               errorElement: <ErrorElement />,
             },
             {
