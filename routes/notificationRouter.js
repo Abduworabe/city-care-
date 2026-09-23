@@ -11,12 +11,15 @@ import {
 
 const router = Router();
 
-router.get("/",             getNotifications);
-router.get("/unread-count", getUnreadCount);
-router.post("/send",        sendAdminMessage);
-router.patch("/read-all",   markAllAsRead);
-router.delete("/clear-all", clearAllNotifications);
-router.patch("/:id/read",   markAsRead);
-router.delete("/:id",       deleteNotification);
+// Specific routes MUST come before /:id to avoid param conflicts
+router.get("/",              getNotifications);
+router.get("/unread-count",  getUnreadCount);
+router.post("/send",         sendAdminMessage);
+router.patch("/read-all",    markAllAsRead);
+router.delete("/clear-all",  clearAllNotifications);
+
+// Param routes last
+router.patch("/:id/read",    markAsRead);
+router.delete("/:id",        deleteNotification);
 
 export default router;

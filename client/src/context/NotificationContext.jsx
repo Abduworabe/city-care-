@@ -15,7 +15,11 @@ export const NotificationProvider = ({ children }) => {
     try {
       setLoading(true);
       const { data } = await customFetch.get(`/notifications?page=${p}&limit=20`);
-      setNotifications(p === 1 ? data.notifications : (prev) => [...prev, ...data.notifications]);
+      if (p === 1) {
+        setNotifications(data.notifications);
+      } else {
+        setNotifications((prev) => [...prev, ...data.notifications]);
+      }
       setUnreadCount(data.unread);
       setNumOfPages(data.numOfPages);
       setPage(p);
