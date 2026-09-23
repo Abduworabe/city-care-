@@ -10,45 +10,39 @@ let jobs = [
 
 export const getAllJobs = async (req, res) => {
   const { search, jobStatus, jobType, sort } = req.query;
-  const queryObject = {
-    createdBy: req.user.userId,
-  };
+  const isAdmin = req.user.role === "admin";
+
+  // Admin sees ALL complaints; citizens see only their own
+  const queryObject = isAdmin ? {} : { createdBy: req.user.userId };
+
   if (search) {
     queryObject.$or = [
       { position: { $regex: search, $options: "i" } },
       { company: { $regex: search, $options: "i" } },
+      { jobLocation: { $regex: search, $options: "i" } },
     ];
   }
-
-  if (jobStatus && jobStatus !== "all") {
-    queryObject.jobStatus = jobStatus;
-  }
-  if (jobType && jobType !== "all") {
-    queryObject.jobType = jobType;
-  }
+  if (jobStatus && jobStatus !== "all") queryObject.jobStatus = jobStatus;
+  if (jobType   && jobType   !== "all") queryObject.jobType   = jobType;
 
   const sortOptions = {
-    newest: "-createdAt",
-    oldest: "createdAt",
-    a_z: "position",
-    z_a: "-position",
+    newest: "-createdAt", oldest: "createdAt", a_z: "position", z_a: "-position",
   };
   const sortKey = sortOptions[sort] || sortOptions.newest;
-  //setup pagination
-  const page = Number(req.query.page) || 1;
-  const limit = Number(req.query.limit) || 10;
-  const skip = (page - 1) * limit;
 
-  const jobs = await Job.find(queryObject)
-    .sort(sortKey)
-    .skip(skip)
-    .limit(limit);
-  const totalJobs = await Job.countDocuments(queryObject);
+  const page  = Number(req.query.page)  || 1;
+  const limit = Number(req.query.limit) || 10;
+  const skip  = (page - 1) * limit;
+
+  // For admin, populate the creator's name so they can see who submitted
+  let query = Job.find(queryObject).sort(sortKey).skip(skip).limit(limit);
+  if (isAdmin) query = query.populate("createdBy", "name lastName email");
+
+  const jobs       = await query;
+  const totalJobs  = await Job.countDocuments(queryObject);
   const numOfPages = Math.ceil(totalJobs / limit);
 
-  res
-    .status(StatusCodes.OK)
-    .json({ totalJobs, numOfPages, currentPage: page, jobs });
+  res.status(StatusCodes.OK).json({ totalJobs, numOfPages, currentPage: page, jobs });
 };
 
 export const createJob = async (req, res) => {
@@ -78,102 +72,49 @@ export const deleteJob = async (req, res) => {
 };
 
 export const showStats = async (req, res) => {
-  const userId = new mongoose.Types.ObjectId(req.user.userId);
+  const isAdmin = req.user.role === "admin";
+  const matchStage = isAdmin
+    ? {} // admin: all complaints
+    : { createdBy: new mongoose.Types.ObjectId(req.user.userId) }; // user: own only
 
-  // ---------------------------------------------------
-  // 1️⃣ GROUP BY REAL STATUSES
-  // ---------------------------------------------------
+  // 1. Stats by status
   let stats = await Job.aggregate([
-    { $match: { createdBy: userId } },
+    { $match: matchStage },
     { $group: { _id: "$jobStatus", count: { $sum: 1 } } },
   ]);
+  stats = stats.reduce((acc, curr) => { acc[curr._id] = curr.count; return acc; }, {});
 
-  stats = stats.reduce((acc, curr) => {
-    acc[curr._id] = curr.count;
-    return acc;
-  }, {});
-
-  // Map results using your REAL complaint statuses
   const defaultStats = {
-    reported: stats["reported"] || 0,
+    reported:    stats["reported"]    || 0,
     in_progress: stats["in progress"] || 0,
-    resolved: stats["resolved"] || 0,
-    closed: stats["closed"] || 0,
+    resolved:    stats["resolved"]    || 0,
+    closed:      stats["closed"]      || 0,
   };
 
-  // ---------------------------------------------------
-  // 2️⃣ TOTAL COMPLAINTS
-  // ---------------------------------------------------
-  const totalComplaints = await Job.countDocuments({ createdBy: userId });
+  // 2. Total complaints
+  const totalComplaints = await Job.countDocuments(matchStage);
 
-  // ---------------------------------------------------
-  // 3️⃣ AVERAGE RESOLUTION TIME (days)
-  // Requires resolvedAt field in Job model
-  // ---------------------------------------------------
+  // 3. Avg resolution time
   const resolutionAgg = await Job.aggregate([
-    {
-      $match: {
-        createdBy: userId,
-        jobStatus: { $in: ["resolved", "closed"] },
-        resolvedAt: { $exists: true },
-      },
-    },
-    {
-      $project: {
-        diff: {
-          $divide: [
-            { $subtract: ["$resolvedAt", "$createdAt"] },
-            1000 * 60 * 60 * 24, // ms → days
-          ],
-        },
-      },
-    },
-    {
-      $group: {
-        _id: null,
-        avgDays: { $avg: "$diff" },
-      },
-    },
+    { $match: { ...matchStage, jobStatus: { $in: ["resolved", "closed"] }, resolvedAt: { $exists: true } } },
+    { $project: { diff: { $divide: [{ $subtract: ["$resolvedAt", "$createdAt"] }, 1000 * 60 * 60 * 24] } } },
+    { $group: { _id: null, avgDays: { $avg: "$diff" } } },
   ]);
-
   const avgResolutionTime = resolutionAgg[0]?.avgDays || 0;
 
-  // ---------------------------------------------------
-  // 4️⃣ MONTHLY APPLICATIONS (CHART)
-  // ---------------------------------------------------
+  // 4. Monthly chart
   let monthlyApplications = await Job.aggregate([
-    { $match: { createdBy: userId } },
-    {
-      $group: {
-        _id: {
-          year: { $year: "$createdAt" },
-          month: { $month: "$createdAt" },
-        },
-        count: { $sum: 1 },
-      },
-    },
+    { $match: matchStage },
+    { $group: { _id: { year: { $year: "$createdAt" }, month: { $month: "$createdAt" } }, count: { $sum: 1 } } },
     { $sort: { "_id.year": -1, "_id.month": -1 } },
     { $limit: 6 },
   ]);
-
   monthlyApplications = monthlyApplications
-    .map((item) => {
-      const { year, month } = item._id;
-      const date = day()
-        .year(year)
-        .month(month - 1)
-        .format("MMM YY");
-      return { date, count: item.count };
-    })
+    .map(({ _id: { year, month }, count }) => ({
+      date: day().year(year).month(month - 1).format("MMM YY"),
+      count,
+    }))
     .reverse();
 
-  // ---------------------------------------------------
-  // SEND FINAL RESPONSE
-  // ---------------------------------------------------
-  res.status(StatusCodes.OK).json({
-    defaultStats,
-    totalComplaints,
-    avgResolutionTime,
-    monthlyApplications,
-  });
+  res.status(StatusCodes.OK).json({ defaultStats, totalComplaints, avgResolutionTime, monthlyApplications });
 };

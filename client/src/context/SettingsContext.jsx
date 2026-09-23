@@ -23,8 +23,9 @@ export const TRANSLATIONS = {
     nav_add_complaint: "Add Complaint",
     nav_profile: "Profile",
     nav_stats: "Statistics",
-    nav_admin: "Admin",
+    nav_admin: "Admin Panel",
     nav_settings: "Settings",
+    nav_dashboard: "Dashboard",
 
     // ── Navbar
     my_profile: "My Profile",
@@ -244,8 +245,9 @@ export const TRANSLATIONS = {
     nav_add_complaint: "ቅሬታ አክል",
     nav_profile: "መገለጫ",
     nav_stats: "ስታቲስቲክስ",
-    nav_admin: "አስተዳዳሪ",
+    nav_admin: "አስተዳዳሪ ፓናል",
     nav_settings: "ቅንብሮች",
+    nav_dashboard: "ዳሽቦርድ",
 
     // ── Navbar
     my_profile: "መገለጫዬ",
