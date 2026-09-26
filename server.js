@@ -53,11 +53,17 @@ app.use(cookieParser());
 app.use(express.json());
 
 // --- Rate Limiting ---
+// Only apply to auth routes — don't limit regular API usage
 app.use(rateLimiter({
-  windowMs: 1 * 60 * 1000, // 1 minute
-  limit: 200, // 200 requests per minute
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  limit: 500,                // 500 requests per 15 min (plenty for normal use)
   standardHeaders: 'draft-7',
   legacyHeaders: false,
+  skip: (req) => {
+    // Skip rate limiting for authenticated API routes (jobs, users, notifications, discussions)
+    const skip = ['/api/v1/jobs', '/api/v1/users', '/api/v1/notifications', '/api/v1/discussions'];
+    return skip.some(path => req.path.startsWith(path));
+  },
 }));
 
 // --- Router Middleware ---
