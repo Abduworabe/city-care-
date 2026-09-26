@@ -25,7 +25,12 @@ const DiscussionSchema = new mongoose.Schema(
     replies:  [ReplySchema],
     relatedJob: { type: mongoose.Types.ObjectId, ref: "Job" },
   },
-  { timestamps: true }
+  { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
+
+// Virtual: reply count for list view
+DiscussionSchema.virtual("replyCount").get(function () {
+  return this.replies?.length || 0;
+});
 
 export default mongoose.model("Discussion", DiscussionSchema);

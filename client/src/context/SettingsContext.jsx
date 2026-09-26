@@ -27,6 +27,7 @@ export const TRANSLATIONS = {
     nav_settings: "Settings",
     nav_dashboard: "Dashboard",
     nav_notifications: "Notifications",
+    nav_discussion: "Discussion Forum",
 
     // ── Navbar
     my_profile: "My Profile",
@@ -174,11 +175,11 @@ export const TRANSLATIONS = {
     // ── Settings
     settings_title: "Settings",
     settings_subtitle: "Customize your Worabe Municipality experience",
-    nav_appearance: "Appearance",
-    nav_language: "Language",
-    nav_notifications: "Notifications",
-    nav_privacy: "Privacy & Security",
-    nav_data: "Data & Storage",
+    set_nav_appearance: "Appearance",
+    set_nav_language: "Language",
+    set_nav_notifications: "Notifications",
+    set_nav_privacy: "Privacy & Security",
+    set_nav_data: "Data & Storage",
     appearance_title: "Appearance",
     appearance_desc: "Customize how the application looks",
     theme_label: "Theme",
@@ -250,6 +251,7 @@ export const TRANSLATIONS = {
     nav_settings: "ቅንብሮች",
     nav_dashboard: "ዳሽቦርድ",
     nav_notifications: "ማሳወቂያዎች",
+    nav_discussion: "የውይይት መድረክ",
 
     // ── Navbar
     my_profile: "መገለጫዬ",
@@ -392,11 +394,11 @@ export const TRANSLATIONS = {
     // ── Settings
     settings_title: "ቅንብሮች",
     settings_subtitle: "የወራቤ ሙኒሲፓሊቲ ልምድዎን ያበጁ",
-    nav_appearance: "መልክ",
-    nav_language: "ቋንቋ",
-    nav_notifications: "ማሳወቂያዎች",
-    nav_privacy: "ግላዊነት እና ደህንነት",
-    nav_data: "ዳታ እና ማከማቻ",
+    set_nav_appearance: "መልክ",
+    set_nav_language: "ቋንቋ",
+    set_nav_notifications: "ማሳወቂያዎች",
+    set_nav_privacy: "ግላዊነት እና ደህንነት",
+    set_nav_data: "ዳታ እና ማከማቻ",
     appearance_title: "መልክ",
     appearance_desc: "መተግበሪያው እንዴት እንደሚታይ ያበጁ",
     theme_label: "ገጽታ",

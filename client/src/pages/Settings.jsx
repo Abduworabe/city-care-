@@ -34,11 +34,11 @@ const Settings = () => {
   };
 
   const navItems = [
-    { id: "appearance", icon: "🎨", label: t.nav_appearance },
-    { id: "language",   icon: "🌐", label: t.nav_language },
-    { id: "notifications", icon: "🔔", label: t.nav_notifications },
-    { id: "privacy",    icon: "🔒", label: t.nav_privacy },
-    { id: "data",       icon: "💾", label: t.nav_data },
+    { id: "appearance",    icon: "🎨", label: t.set_nav_appearance },
+    { id: "language",      icon: "🌐", label: t.set_nav_language },
+    { id: "notifications", icon: "🔔", label: t.set_nav_notifications },
+    { id: "privacy",       icon: "🔒", label: t.set_nav_privacy },
+    { id: "data",          icon: "💾", label: t.set_nav_data },
   ];
 
   return (

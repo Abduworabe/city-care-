@@ -9,21 +9,22 @@ import {
   Error, AddJob, EditJob, Stats, AllJobs, Profile, Admin,
 } from "./pages";
 import Notifications from "./pages/Notifications";
+import Discussion    from "./pages/Discussion";
+import ErrorElement  from "./components/ErrorElement";
+import Settings      from "./pages/Settings";
 
 // Actions and Loaders
-import { action as registerAction } from "./pages/Register";
-import { action as loginAction } from "./pages/Login";
+import { action as registerAction }       from "./pages/Register";
+import { action as loginAction }          from "./pages/Login";
 import { loader as dashboardLayoutLoader } from "./pages/DashboardLayout";
-import { action as addJobAction } from "./pages/AddJob";
-import { loader as allJobsLoader } from "./pages/AllJobs";
-import { loader as editJobLoader } from "./pages/EditJob";
-import { action as editJobAction } from "./pages/EditJob";
-import { action as deleteJobAction } from "./pages/DeleteJob";
-import { loader as adminLoader } from "./pages/Admin";
-import { action as profileAction } from "./pages/Profile";
-import { loader as statsLoader } from "./pages/Stats";
-import ErrorElement from "./components/ErrorElement";
-import Settings from "./pages/Settings";
+import { action as addJobAction }         from "./pages/AddJob";
+import { loader as allJobsLoader }        from "./pages/AllJobs";
+import { loader as editJobLoader }        from "./pages/EditJob";
+import { action as editJobAction }        from "./pages/EditJob";
+import { action as deleteJobAction }      from "./pages/DeleteJob";
+import { loader as adminLoader }          from "./pages/Admin";
+import { action as profileAction }        from "./pages/Profile";
+import { loader as statsLoader }          from "./pages/Stats";
 
 function App() {
   const [isDarkThemeEnabled, setIsDarkThemeEnabled] = useState(false);
@@ -42,11 +43,7 @@ function App() {
   };
 
   const queryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        staleTime: 1000 * 60 * 5,
-      },
-    },
+    defaultOptions: { queries: { staleTime: 1000 * 60 * 5 } },
   });
 
   const router = createBrowserRouter([
@@ -57,7 +54,7 @@ function App() {
       children: [
         { index: true, element: <Landing /> },
         { path: "register", element: <Register />, action: registerAction },
-        { path: "login", element: <Login />, action: loginAction(queryClient) },
+        { path: "login",    element: <Login />,    action: loginAction(queryClient) },
         {
           path: "dashboard",
           element: (
@@ -69,22 +66,11 @@ function App() {
           ),
           loader: dashboardLayoutLoader(queryClient),
           children: [
-            // ✅ Dashboard index shows Stats by default
+            // Index → Stats dashboard
             {
               index: true,
               element: <Stats />,
               loader: statsLoader(queryClient),
-              errorElement: <ErrorElement />,
-            },
-            {
-              path: "add-job",
-              element: <AddJob />,
-              action: addJobAction(queryClient),
-              errorElement: <ErrorElement />,
-            },
-            {
-              path: "settings",
-              element: <Settings />,
               errorElement: <ErrorElement />,
             },
             {
@@ -97,6 +83,12 @@ function App() {
               path: "all-jobs",
               element: <AllJobs />,
               loader: allJobsLoader(queryClient),
+              errorElement: <ErrorElement />,
+            },
+            {
+              path: "add-job",
+              element: <AddJob />,
+              action: addJobAction(queryClient),
               errorElement: <ErrorElement />,
             },
             {
@@ -122,9 +114,19 @@ function App() {
               errorElement: <ErrorElement />,
             },
             {
+              path: "discussion",
+              element: <Discussion />,
+              errorElement: <ErrorElement />,
+            },
+            {
               path: "admin",
               element: <Admin />,
               loader: adminLoader,
+              errorElement: <ErrorElement />,
+            },
+            {
+              path: "settings",
+              element: <Settings />,
               errorElement: <ErrorElement />,
             },
           ],

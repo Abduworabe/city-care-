@@ -72,6 +72,16 @@ export const getJob = async (req, res) => {
 
 export const updateJob = async (req, res) => {
   const oldJob = await Job.findById(req.params.id);
+
+  // Auto-set resolvedAt when status changes to resolved or closed
+  if (
+    req.body.jobStatus &&
+    ["resolved", "closed"].includes(req.body.jobStatus) &&
+    !["resolved", "closed"].includes(oldJob.jobStatus)
+  ) {
+    req.body.resolvedAt = new Date();
+  }
+
   const updatedJob = await Job.findByIdAndUpdate(req.params.id, req.body, { new: true });
 
   // If admin changed the status, notify the complaint owner

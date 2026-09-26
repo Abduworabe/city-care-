@@ -14,10 +14,11 @@ import mongoSanitize from "express-mongo-sanitize";
 import rateLimiter from "express-rate-limit";
 
 // routers
-import jobRouter from "./routes/jobRouter.js";
-import authRouter from "./routes/authRouter.js";
-import userRouter from "./routes/userRouter.js";
+import jobRouter          from "./routes/jobRouter.js";
+import authRouter         from "./routes/authRouter.js";
+import userRouter         from "./routes/userRouter.js";
 import notificationRouter from "./routes/notificationRouter.js";
+import discussionRouter   from "./routes/discussionRouter.js";
 
 //public
 import { dirname } from "path";
@@ -64,6 +65,7 @@ app.use("/api/v1/jobs",          authenticateUser, jobRouter);
 app.use("/api/v1/users",         authenticateUser, userRouter);
 app.use("/api/v1/auth",          authRouter);
 app.use("/api/v1/notifications", authenticateUser, notificationRouter);
+app.use("/api/v1/discussions",   authenticateUser, discussionRouter);
 
 // --- Static Asset Serving (Catch-all for frontend) ---
 app.get("*", (req, res) => {

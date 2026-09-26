@@ -1,9 +1,10 @@
 import mongoose from "mongoose";
 import { COMPLAINT_STATUS, COMPLAINT_TYPE } from "../utils/constants.js";
+
 const JobSchema = new mongoose.Schema(
   {
-    company: String,
-    position: String,
+    company: String,       // Department concerned
+    position: String,      // Issue title
     jobStatus: {
       type: String,
       enum: Object.values(COMPLAINT_STATUS),
@@ -18,6 +19,12 @@ const JobSchema = new mongoose.Schema(
       type: String,
       default: "my city",
     },
+    photo: String,             // Optional Cloudinary URL for complaint photo
+    adminRemarks: {
+      type: String,
+      default: "",
+    },
+    resolvedAt: Date,          // Set when status → resolved/closed
     createdBy: {
       type: mongoose.Types.ObjectId,
       ref: "User",
@@ -25,4 +32,5 @@ const JobSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
 export default mongoose.model("Job", JobSchema);

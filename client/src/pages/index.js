@@ -11,3 +11,4 @@ export { default as Profile }        from "./Profile.jsx";
 export { default as Admin }          from "./Admin.jsx";
 export { default as Landing }        from "./Landing.jsx";
 export { default as Notifications }  from "./Notifications.jsx";
+export { default as Discussion }     from "./Discussion.jsx";
