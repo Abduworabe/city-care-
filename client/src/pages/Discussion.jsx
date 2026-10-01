@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import styled from "styled-components";
 import customFetch from "../utils/customFetch";
 import { useDashboardContext } from "./DashboardLayout";
-import { useSettings } from "../context/SettingsContext";
 import { toast } from "react-toastify";
 import day from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -106,7 +105,7 @@ const ThreadDetail = ({ threadId, onBack, currentUser, isAdmin }) => {
       await customFetch.delete(`/discussions/${threadId}/reply/${replyId}`);
       setThread(prev => ({ ...prev, replies: prev.replies.filter(r => r._id !== replyId) }));
       toast.success("Reply deleted");
-    } catch (err) { toast.error("Failed to delete reply"); }
+    } catch { toast.error("Failed to delete reply"); }
   };
 
   const handleTogglePin = async () => {
@@ -114,7 +113,7 @@ const ThreadDetail = ({ threadId, onBack, currentUser, isAdmin }) => {
       const { data } = await customFetch.patch(`/discussions/${threadId}/pin`);
       setThread(prev => ({ ...prev, pinned: data.pinned }));
       toast.success(data.pinned ? "Thread pinned" : "Thread unpinned");
-    } catch (err) { toast.error("Failed to pin thread"); }
+    } catch { toast.error("Failed to pin thread"); }
   };
 
   const handleToggleClose = async () => {
@@ -122,7 +121,7 @@ const ThreadDetail = ({ threadId, onBack, currentUser, isAdmin }) => {
       const { data } = await customFetch.patch(`/discussions/${threadId}/close`);
       setThread(prev => ({ ...prev, closed: data.closed }));
       toast.success(data.closed ? "Thread closed" : "Thread reopened");
-    } catch (err) { toast.error("Failed to update thread"); }
+    } catch { toast.error("Failed to update thread"); }
   };
 
   if (loading) return <div className="loading-center"><div className="loading" /></div>;
@@ -221,7 +220,6 @@ const ThreadDetail = ({ threadId, onBack, currentUser, isAdmin }) => {
 // ── Main Discussion Page ──────────────────────────────────────────────────────
 const Discussion = () => {
   const { user } = useDashboardContext();
-  const { t }   = useSettings();
   const isAdmin  = user?.role === "admin";
 
   const [discussions, setDiscussions] = useState([]);
@@ -245,7 +243,7 @@ const Discussion = () => {
       setNumOfPages(data.numOfPages);
       setTotal(data.total);
       setPage(pg);
-    } catch (_) { toast.error("Failed to load discussions"); }
+    } catch { toast.error("Failed to load discussions"); }
     finally { setLoading(false); }
   };
 
@@ -277,7 +275,7 @@ const Discussion = () => {
       await customFetch.delete(`/discussions/${id}`);
       setDiscussions(prev => prev.filter(d => d._id !== id));
       toast.success("Discussion deleted");
-    } catch (err) { toast.error("Failed to delete"); }
+    } catch { toast.error("Failed to delete"); }
   };
 
   // Show thread detail
@@ -543,6 +541,78 @@ const PageWrapper = styled.div`
   }
 
   .loading-center { display: flex; justify-content: center; padding: 3rem; }
+
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .disc-header {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.75rem;
+
+      .btn-new {
+        align-self: flex-start;
+      }
+    }
+
+    .cat-tabs {
+      overflow-x: auto;
+      flex-wrap: nowrap;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 0.5rem;
+      scrollbar-width: none;
+      &::-webkit-scrollbar { display: none; }
+    }
+
+    .cat-tab {
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+  }
+
+  @media (max-width: 480px) {
+    padding: 0.25rem 0 2rem;
+
+    .disc-header {
+      h2 { font-size: 1.15rem; }
+      .btn-new { width: 100%; text-align: center; justify-content: center; }
+    }
+
+    .new-thread-form {
+      padding: 1rem 0.85rem;
+      border-radius: 10px;
+    }
+
+    .disc-card {
+      padding: 0.85rem;
+      gap: 0.65rem;
+    }
+
+    .disc-icon {
+      width: 34px;
+      height: 34px;
+      font-size: 1.1rem;
+    }
+
+    .disc-title {
+      font-size: 0.9rem;
+    }
+
+    .thread-main,
+    .replies-section,
+    .reply-form {
+      padding: 1rem 0.85rem;
+      border-radius: 10px;
+    }
+
+    .thread-title {
+      font-size: 1.15rem;
+    }
+
+    .admin-controls {
+      flex-direction: column;
+      .btn-admin { width: 100%; }
+    }
+  }
 `;
 
 export default Discussion;

@@ -80,16 +80,18 @@ const EditJob = () => {
                 border: "1.5px solid var(--border-color)", borderRadius: "var(--border-radius)",
                 color: "var(--text-color)", fontSize: "0.95rem" }}>{job.jobLocation}</p>
             </div>
-            <FormRow  type="text" name="position"    defaultValue={job.position}    style={{ display:"none" }} />
-            <FormRow  type="text" name="company"     defaultValue={job.company}     style={{ display:"none" }} />
-            <FormRow  type="text" name="jobLocation" defaultValue={job.jobLocation} style={{ display:"none" }} />
+            <input type="hidden" name="position" defaultValue={job.position} />
+            <input type="hidden" name="company" defaultValue={job.company} />
+            <input type="hidden" name="jobLocation" defaultValue={job.jobLocation} />
             {/* Admin primary action: change status */}
             <FormRowSelect
               name="jobStatus" labelText="🔄 Update Status"
               defaultValue={job.jobStatus} list={Object.values(COMPLAINT_STATUS)}
             />
             <FormRowSelect name="jobType" labelText={t.job_type} defaultValue={job.jobType} list={Object.values(COMPLAINT_TYPE)} />
-            <SubmitBtn formBtn text="✅ Update Status" />
+            <div className="form-actions">
+              <SubmitBtn formBtn text="✅ Update Status" />
+            </div>
           </div>
         ) : (
           /* ── Citizen view: can edit their own complaint details */
@@ -99,7 +101,9 @@ const EditJob = () => {
             <FormRow type="text" name="jobLocation" labelText={t.job_location}   defaultValue={job.jobLocation} />
             <FormRowSelect name="jobStatus" labelText={t.job_status} defaultValue={job.jobStatus} list={Object.values(COMPLAINT_STATUS)} />
             <FormRowSelect name="jobType"   labelText={t.job_type}   defaultValue={job.jobType}   list={Object.values(COMPLAINT_TYPE)} />
-            <SubmitBtn formBtn text={t.save} />
+            <div className="form-actions">
+              <SubmitBtn formBtn text={t.save} />
+            </div>
           </div>
         )}
       </Form>

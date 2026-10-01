@@ -51,7 +51,7 @@ function SearchContainer() {
           <div className="form-actions">
             <Link to="/dashboard/all-jobs" className="btn reset-btn">{t.clear_filters}</Link>
             <button type="button" className="btn apply-btn"
-              onClick={() => submit(document.querySelector(".form"))}>
+              onClick={(e) => submit(e.currentTarget.form)}>
               {t.apply_filters}
             </button>
           </div>

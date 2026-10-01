@@ -12,21 +12,27 @@ const Wrapper = styled.nav`
   border-bottom: 1px solid rgba(255, 96, 0, 0.25);
   box-shadow: 0 2px 16px rgba(0, 0, 0, 0.3);
 
+  @media (max-width: 480px) {
+    padding: 0 0.75rem;
+  }
+
   .nav-center {
     display: flex;
     width: 100%;
     align-items: center;
     justify-content: space-between;
-    gap: 0.75rem;
+    gap: 0.5rem;
   }
 
   /* ---- LEFT ---- */
   .nav-left {
     display: flex;
     align-items: center;
+    gap: 0.85rem;
+    flex-shrink: 0;
   }
 
-  /* Hamburger — only visible below 992px */
+  /* Hamburger — visible on all screen sizes */
   .hamburger-btn {
     display: flex;
     align-items: center;
@@ -40,11 +46,20 @@ const Wrapper = styled.nav`
     font-size: 1.25rem;
     cursor: pointer;
     transition: all 0.2s ease;
+    flex-shrink: 0;
+
+    @media (max-width: 480px) {
+      width: 36px;
+      height: 36px;
+      font-size: 1.1rem;
+      border-radius: 8px;
+    }
 
     &:hover {
       background: rgba(255, 96, 0, 0.25);
       border-color: rgba(255, 96, 0, 0.6);
       transform: scale(1.05);
+      color: #ff9a3c;
     }
 
     &:active {
@@ -52,9 +67,22 @@ const Wrapper = styled.nav`
     }
   }
 
-  @media (min-width: 992px) {
-    .hamburger-btn {
+  .nav-brand-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #ff9a3c, #ffcc00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 0.5px;
+    user-select: none;
+    display: inline-block;
+
+    @media (min-width: 992px) {
       display: none;
+      &.show-brand {
+        display: inline-block;
+      }
     }
   }
 
@@ -64,6 +92,11 @@ const Wrapper = styled.nav`
     align-items: center;
     gap: 0.6rem;
     margin-left: auto;
+    flex-shrink: 0;
+
+    @media (max-width: 480px) {
+      gap: 0.35rem;
+    }
   }
 
   /* Generic icon button */
@@ -81,6 +114,19 @@ const Wrapper = styled.nav`
     cursor: pointer;
     text-decoration: none;
     transition: all 0.2s ease;
+    flex-shrink: 0;
+
+    @media (max-width: 480px) {
+      width: 34px;
+      height: 34px;
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 340px) {
+      width: 32px;
+      height: 32px;
+      font-size: 0.85rem;
+    }
 
     &:hover {
       background: rgba(255, 96, 0, 0.18);
@@ -180,13 +226,13 @@ const Wrapper = styled.nav`
 
   .bell-dropdown {
     position: absolute; top: calc(100% + 0.6rem); right: 0;
-    width: 320px; background: #1a1a2e;
+    width: 320px; max-width: calc(100vw - 16px); background: #1a1a2e;
     border: 1px solid rgba(255,96,0,0.3); border-radius: 14px;
     box-shadow: 0 12px 40px rgba(0,0,0,0.5); z-index: 9000;
     overflow: hidden; animation: dropIn 0.2s ease;
 
-    @media (max-width: 420px) {
-      position: fixed; top: var(--nav-height, 64px);
+    @media (max-width: 480px) {
+      position: fixed; top: var(--nav-height, 56px);
       right: 8px; left: 8px; width: auto;
     }
   }
@@ -240,6 +286,7 @@ const Wrapper = styled.nav`
     top: calc(100% + 0.6rem);
     right: 0;
     min-width: 230px;
+    max-width: calc(100vw - 16px);
     background: #1a1a2e;
     border: 1px solid rgba(255, 96, 0, 0.3);
     border-radius: 14px;
@@ -248,13 +295,14 @@ const Wrapper = styled.nav`
     overflow: hidden;
     animation: dropIn 0.2s ease;
 
-    /* On very small screens, stretch to viewport */
-    @media (max-width: 420px) {
+    /* On mobile screens, stretch safely across viewport */
+    @media (max-width: 480px) {
       position: fixed;
-      top: var(--nav-height, 64px);
+      top: var(--nav-height, 56px);
       right: 8px;
       left: 8px;
       min-width: unset;
+      width: auto;
     }
   }
 

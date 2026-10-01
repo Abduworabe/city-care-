@@ -126,7 +126,7 @@ const DashboardLayout = ({
           <main className="dashboard">
             <SmallSidebar />
             <BigSidebar />
-            <div>
+            <div className="dashboard-content">
               <Navbar />
               <div className="dashboard-page">
                 {isPageLoading ? <Loading /> : <Outlet context={{ user }} />}

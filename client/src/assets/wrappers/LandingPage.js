@@ -849,26 +849,28 @@ const Wrapper = styled.main`
 
   @media (max-width: 768px) {
     .nav {
-      padding: 0.75rem 0;
+      padding: 0.65rem 0;
     }
 
     .nav-center {
-      padding: 0 1.5rem;
-      flex-direction: column;
-      gap: 1rem;
+      padding: 0 1rem;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
     }
 
     .nav-links {
-      gap: 1rem;
+      gap: 0.5rem;
     }
 
     .nav-btn {
-      padding: 0.6rem 1.5rem;
-      font-size: 0.9rem;
+      padding: 0.5rem 1rem;
+      font-size: 0.85rem;
+      border-radius: 8px;
     }
 
     .hero {
-      padding: 8rem 0 3rem;
+      padding: 6rem 0 3rem;
     }
 
     .hero-content h1 {

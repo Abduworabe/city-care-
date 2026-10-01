@@ -36,16 +36,16 @@ const Wrapper = styled.section`
     margin-top: 1.25rem;
   }
 
-  /* Tablet */
-  @media (min-width: 640px) {
+  /* Tablet & smaller desktop with sidebar */
+  @media (min-width: 600px) {
     .jobs {
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(2, 1fr);
       gap: 1.25rem;
     }
   }
 
   /* Desktop */
-  @media (min-width: 992px) {
+  @media (min-width: 1200px) {
     margin-top: 2rem;
 
     .jobs {
@@ -60,7 +60,7 @@ const Wrapper = styled.section`
   }
 
   /* Large Desktop */
-  @media (min-width: 1400px) {
+  @media (min-width: 1600px) {
     .jobs {
       grid-template-columns: repeat(4, 1fr);
     }

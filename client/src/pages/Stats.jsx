@@ -1,7 +1,6 @@
 import { ChartsContainer, StatsContainer } from "../components";
 import customFetch from "../utils/customFetch";
 import { useQuery } from "@tanstack/react-query";
-import { useSettings } from "../context/SettingsContext";
 import { useDashboardContext } from "./DashboardLayout";
 
 const statsQuery = {
@@ -20,7 +19,6 @@ export const loader = (queryClient) => async () => {
 const Stats = () => {
   const { data } = useQuery(statsQuery);
   const { user } = useDashboardContext();
-  const { t } = useSettings();
   const isAdmin = user?.role === "admin";
 
   const totalComplaints     = data?.totalComplaints     || 0;

@@ -69,17 +69,18 @@ const Profile = () => {
                 {t.profile_photo}
               </label>
               <input type="file" id="avatar" name="avatar" className="form-input"
-                accept="image/*" onChange={handleFileChange} style={{ maxWidth:"280px" }} />
+                accept="image/*" onChange={handleFileChange} style={{ width: "100%", maxWidth:"280px" }} />
             </div>
           </div>
           <FormRow type="text"  name="name"     labelText={t.first_name} defaultValue={name} />
           <FormRow type="text"  name="lastName" labelText={t.last_name}  defaultValue={lastName} />
           <FormRow type="email" name="email"    labelText={t.email}      defaultValue={email} />
           <FormRow type="text"  name="location" labelText={t.location}   defaultValue={location} />
-          <button className="btn btn-block form-btn" type="submit"
-            disabled={isSubmitting} style={{ gridColumn:"1 / -1" }}>
-            {isSubmitting ? t.saving : t.save_changes}
-          </button>
+          <div className="form-actions">
+            <button className="btn btn-block form-btn" type="submit" disabled={isSubmitting}>
+              {isSubmitting ? t.saving : t.save_changes}
+            </button>
+          </div>
         </div>
       </Form>
     </Wrapper>

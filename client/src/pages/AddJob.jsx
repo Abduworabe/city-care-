@@ -39,9 +39,11 @@ const AddJob = () => {
           <FormRow type="text" name="jobLocation" labelText={t.issue_location} placeholder={t.location_field_placeholder} defaultValue={user.location} />
           <FormRowSelect name="jobStatus" labelText={t.current_status} defaultValue={COMPLAINT_STATUS.REPORTED} list={Object.values(COMPLAINT_STATUS)} />
           <FormRowSelect name="jobType"   labelText={t.issue_type}     defaultValue={COMPLAINT_TYPE.WATER}     list={Object.values(COMPLAINT_TYPE)} />
-          <button type="submit" className="btn btn-block form-btn" disabled={isSubmitting}>
-            {isSubmitting ? t.submitting : t.submit_complaint}
-          </button>
+          <div className="form-actions">
+            <button type="submit" className="btn btn-block form-btn" disabled={isSubmitting}>
+              {isSubmitting ? t.submitting : t.submit_complaint}
+            </button>
+          </div>
         </div>
       </Form>
     </Wrapper>

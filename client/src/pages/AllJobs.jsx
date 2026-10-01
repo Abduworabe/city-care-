@@ -1,4 +1,3 @@
-import { toast } from "react-toastify";
 import { JobsContainer, SearchContainer } from "../components";
 import customFetch from "../utils/customFetch";
 import { useLoaderData } from "react-router-dom";
@@ -8,48 +7,19 @@ import styled from "styled-components";
 
 const AllJobsContext = createContext();
 
-// Responsive Wrapper for AllJobs
 const AllJobsWrapper = styled.div`
-  padding: 1rem;
-  min-height: calc(100vh - var(--nav-height));
+  width: 100%;
 
-  /* Mobile First Layout */
   .all-jobs-content {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
-    max-width: 1400px;
-    margin: 0 auto;
+    gap: 1.25rem;
+    width: 100%;
   }
 
-  /* Tablet Styles */
   @media (min-width: 768px) {
-    padding: 1.5rem;
     .all-jobs-content {
-      gap: 2rem;
-    }
-  }
-
-  /* Desktop Styles */
-  @media (min-width: 992px) {
-    padding: 2rem;
-    .all-jobs-content {
-      gap: 2.5rem;
-    }
-  }
-
-  /* Large Desktop */
-  @media (min-width: 1200px) {
-    .all-jobs-content {
-      gap: 3rem;
-    }
-  }
-
-  /* Extra Small Mobile */
-  @media (max-width: 480px) {
-    padding: 0.75rem;
-    .all-jobs-content {
-      gap: 1rem;
+      gap: 1.75rem;
     }
   }
 `;

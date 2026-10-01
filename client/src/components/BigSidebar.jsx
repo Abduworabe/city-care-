@@ -3,16 +3,17 @@ import Wrapper from "../assets/wrappers/BigSidebar";
 import { Logo } from "./index";
 import NavLinks from "./NavLinks";
 import { useDashboardContext } from "../pages/DashboardLayout";
-import { FaCrown, FaChartLine, FaBell } from "react-icons/fa";
+import { useNotifications } from "../context/NotificationContext";
+import { FaCrown, FaBell } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const BigSidebar = () => {
-  const { user } = useDashboardContext();
+  const { user, showSidebar } = useDashboardContext();
+  const { unreadCount } = useNotifications();
 
   return (
-    <Wrapper>
+    <Wrapper className={showSidebar ? "collapsed" : ""}>
       <div className="sidebar-container">
-        {/* Decorative Elements */}
-
         <div className="content">
           {/* Logo and Branding */}
           <header>
@@ -39,10 +40,14 @@ const BigSidebar = () => {
           <div className="navigation-section">
             <div className="section-header">
               <h3 className="section-title">Navigation</h3>
-              <div className="notification-bell">
+              <Link to="/dashboard/notifications" className="notification-bell" title="Notifications">
                 <FaBell />
-                <span className="notification-count">3</span>
-              </div>
+                {unreadCount > 0 && (
+                  <span className="notification-count">
+                    {unreadCount > 99 ? "99+" : unreadCount}
+                  </span>
+                )}
+              </Link>
             </div>
             <NavLinks isBigSidebar={true} />
           </div>

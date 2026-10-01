@@ -2,11 +2,13 @@ import styled from "styled-components";
 
 const Wrapper = styled.section`
   min-height: 100vh;
-  display: grid;
+  display: flex;
   align-items: center;
-  padding: 2rem;
+  justify-content: center;
+  padding: 2rem 1rem;
   position: relative;
   z-index: 1;
+  overflow-y: auto;
 
   .form {
     max-width: 460px;
@@ -125,6 +127,119 @@ const Wrapper = styled.section`
     &:focus-visible {
       outline: 2px solid #ff6000;
       outline-offset: 2px;
+    }
+  }
+
+  /* Demo Section */
+  .demo-divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 1.25rem 0 1rem;
+    color: #94a3b8;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+
+    &::before, &::after {
+      content: "";
+      flex: 1;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    &::before { margin-right: 0.75rem; }
+    &::after  { margin-left: 0.75rem; }
+  }
+
+  .demo-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+
+    @media (max-width: 380px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .btn-demo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.7rem 0.85rem;
+    background: #1a1a2e;
+    color: #ffffff;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border: 1px solid rgba(255, 96, 0, 0.3);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: #16213e;
+      border-color: #ff6000;
+      color: #ffcc00;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+  }
+
+  .demo-credentials-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-left: 4px solid #ff6000;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.82rem;
+    color: #475569;
+
+    .card-title {
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 0.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .credential-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 0.35rem;
+      padding: 0.3rem 0;
+      border-bottom: 1px dashed #e2e8f0;
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+
+    .fill-btn {
+      background: rgba(255, 96, 0, 0.1);
+      border: 1px solid rgba(255, 96, 0, 0.3);
+      color: #ff6000;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+
+      &:hover {
+        background: #ff6000;
+        color: white;
+      }
     }
   }
 

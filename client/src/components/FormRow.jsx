@@ -2,7 +2,8 @@ const FormRow = ({
   type,
   name,
   labelText,
-  defaultValue = "",
+  defaultValue,
+  value,
   onChange,
   placeholder,
   required = false,
@@ -17,7 +18,7 @@ const FormRow = ({
         id={name}
         name={name}
         className="form-input"
-        defaultValue={defaultValue}
+        {...(value !== undefined ? { value } : defaultValue !== undefined ? { defaultValue } : {})}
         onChange={onChange}
         placeholder={placeholder}
         required={required}

@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNotifications } from "../context/NotificationContext";
 import { useDashboardContext } from "./DashboardLayout";
-import { useSettings } from "../context/SettingsContext";
 import customFetch from "../utils/customFetch";
 import { toast } from "react-toastify";
 import day from "dayjs";
@@ -91,7 +90,6 @@ const Notifications = () => {
     fetchNotifications, markAsRead, markAllAsRead, deleteNotification, clearAll, sendAdminMessage,
   } = useNotifications();
   const { user } = useDashboardContext();
-  const { t }   = useSettings();
   const isAdmin  = user?.role === "admin";
 
   const [filter, setFilter]         = useState("all"); // all | unread | read
@@ -372,6 +370,78 @@ const PageWrapper = styled.div`
     border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s;
     &:hover { background: #7c3aed; }
     &:disabled { opacity: 0.6; cursor: not-allowed; }
+  }
+
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .notif-header {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.75rem;
+    }
+
+    .header-actions {
+      justify-content: flex-start;
+    }
+  }
+
+  @media (max-width: 480px) {
+    padding: 0.25rem 0 1.5rem;
+
+    .notif-header h2 {
+      font-size: 1.15rem;
+    }
+
+    .header-actions {
+      width: 100%;
+      .btn-compose,
+      .btn-read-all,
+      .btn-clear {
+        flex: 1;
+        min-width: 90px;
+        text-align: center;
+        padding: 0.5rem 0.65rem;
+        font-size: 0.78rem;
+      }
+    }
+
+    .filter-tabs {
+      overflow-x: auto;
+      flex-wrap: nowrap;
+      padding-bottom: 0.35rem;
+      scrollbar-width: none;
+      &::-webkit-scrollbar { display: none; }
+      .tab {
+        white-space: nowrap;
+        flex-shrink: 0;
+        padding: 0.4rem 0.75rem;
+        font-size: 0.8rem;
+      }
+    }
+
+    .notif-item {
+      padding: 0.85rem;
+      gap: 0.65rem;
+    }
+
+    .notif-icon {
+      width: 36px;
+      height: 36px;
+      font-size: 1.1rem;
+    }
+
+    .notif-title {
+      font-size: 0.88rem;
+    }
+
+    .notif-message {
+      font-size: 0.8rem;
+    }
+
+    .modal {
+      padding: 1.25rem 1rem;
+      max-width: 95vw;
+    }
   }
 `;
 

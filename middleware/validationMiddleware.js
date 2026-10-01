@@ -56,12 +56,16 @@ export const validateIdParam = withValidationErrors([
 export const validateRegisterInput = withValidationErrors([
   body("name").notEmpty().withMessage("name is required"),
   body("email")
+    .trim()
     .notEmpty()
     .withMessage("email is required")
     .isEmail()
     .withMessage("invalid email format")
     .custom(async (email) => {
-      const user = await User.findOne({ email });
+      const normalized = email.toLowerCase().trim();
+      const user = await User.findOne({
+        email: { $regex: new RegExp(`^${normalized}$`, "i") },
+      });
       if (user) {
         throw new BadRequestError("email already exists");
       }
@@ -77,6 +81,7 @@ export const validateRegisterInput = withValidationErrors([
 
 export const validateLoginInput = withValidationErrors([
   body("email")
+    .trim()
     .notEmpty()
     .withMessage("email is required")
     .isEmail()

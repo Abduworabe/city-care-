@@ -21,7 +21,7 @@ const TYPE_ICONS = {
 };
 
 const Navbar = () => {
-  const { toggleSidebar, user, logoutUser, toggleDarkTheme, isDarkTheme } = useDashboardContext();
+  const { toggleSidebar, showSidebar, user, logoutUser, toggleDarkTheme, isDarkTheme } = useDashboardContext();
   const { t } = useSettings();
   const { unreadCount, notifications, fetchNotifications, markAsRead, markAllAsRead } = useNotifications();
   const navigate = useNavigate();
@@ -53,11 +53,20 @@ const Navbar = () => {
     <Wrapper>
       <div className="nav-center">
 
-        {/* LEFT: Hamburger */}
+        {/* LEFT: Hamburger & Brand */}
         <div className="nav-left">
-          <button type="button" className="hamburger-btn" onClick={toggleSidebar} aria-label="Toggle menu">
+          <button
+            type="button"
+            className="hamburger-btn"
+            onClick={toggleSidebar}
+            aria-label="Toggle menu"
+            title="Toggle menu"
+          >
             <FaAlignLeft />
           </button>
+          <span className={`nav-brand-title ${showSidebar ? "show-brand" : ""}`}>
+            CityCare
+          </span>
         </div>
 
         {/* RIGHT */}

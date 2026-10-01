@@ -137,6 +137,11 @@ const Wrapper = styled.article`
     padding: 0.85rem 1.25rem;
     border-top: 1px solid var(--border-color);
     background: var(--grey-50);
+
+    form {
+      flex: 1;
+      display: flex;
+    }
   }
 
   .dark-theme & .actions {
@@ -146,12 +151,13 @@ const Wrapper = styled.article`
   .edit-btn,
   .delete-btn {
     flex: 1;
+    width: 100%;
     height: 38px;
     font-size: 0.85rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0 1rem;
+    padding: 0 0.75rem;
     border-radius: var(--border-radius);
     font-weight: 600;
     transition: all 0.25s ease;
@@ -159,6 +165,7 @@ const Wrapper = styled.article`
     cursor: pointer;
     min-width: 0;
     text-decoration: none;
+    white-space: nowrap;
   }
 
   .edit-btn {

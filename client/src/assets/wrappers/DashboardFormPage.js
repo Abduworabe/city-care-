@@ -127,6 +127,11 @@ const Wrapper = styled.section`
     }
   }
 
+  .form-btn {
+    align-self: end;
+    min-height: 42px;
+  }
+
   /* Tablet */
   @media (min-width: 768px) {
     padding: 2rem;
@@ -172,20 +177,34 @@ const Wrapper = styled.section`
 
   /* Mobile */
   @media (max-width: 480px) {
-    padding: 1.25rem 1rem;
+    padding: 1.25rem 0.85rem;
 
     .form-title {
       font-size: 1.05rem;
-      margin-bottom: 1.1rem;
+      margin-bottom: 1rem;
+    }
+
+    .form-center {
+      gap: 0.9rem;
     }
 
     .form-actions {
       flex-direction: column;
+      gap: 0.5rem;
+      padding-top: 0.85rem;
 
       .btn {
         width: 100%;
         min-width: auto;
       }
+    }
+  }
+
+  @media (max-width: 360px) {
+    padding: 1rem 0.65rem;
+
+    .form-title {
+      font-size: 0.95rem;
     }
   }
 `;

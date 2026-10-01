@@ -7,6 +7,7 @@ import { createJWT } from "../utils/tokenUtils.js";
 export const register = async (req, res) => {
   const isFirstAccount = (await User.countDocuments()) === 0;
   req.body.role = isFirstAccount ? "admin" : "user";
+  if (req.body.email) req.body.email = String(req.body.email).toLowerCase().trim();
 
   const hashedPassword = await hashPassword(req.body.password);
   req.body.password = hashedPassword;
@@ -32,7 +33,11 @@ export const register = async (req, res) => {
   res.status(StatusCodes.CREATED).json({ msg: "user created" });
 };
 export const login = async (req, res) => {
-  const user = await User.findOne({ email: req.body.email });
+  const rawEmail = req.body.email ? String(req.body.email).trim() : "";
+  const safeRegex = rawEmail.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const user = await User.findOne({
+    email: { $regex: new RegExp(`^${safeRegex}$`, "i") },
+  });
 
   const isValidUser =
     user && (await comparePassword(req.body.password, user.password));
@@ -47,7 +52,7 @@ export const login = async (req, res) => {
     secure: process.env.NODE_ENV === "production",
   });
 
-  res.status(StatusCodes.CREATED).json({ msg: "user logged in" });
+  res.status(StatusCodes.OK).json({ msg: "user logged in", user: { role: user.role, name: user.name } });
 };
 
 export const logout = (req, res) => {

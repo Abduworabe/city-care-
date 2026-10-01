@@ -44,7 +44,7 @@ const Wrapper = styled.aside`
     width: 280px;
     max-width: 85vw;
     background: linear-gradient(180deg, #0f0c29 0%, #1a1a2e 50%, #16213e 100%);
-    padding: 1.5rem 1.25rem;
+    padding: max(1.25rem, env(safe-area-inset-top, 1.25rem)) 1.25rem max(1.25rem, env(safe-area-inset-bottom, 1.25rem));
     transform: translateX(-100%);
     transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 4px 0 30px rgba(0, 0, 0, 0.5);
@@ -52,7 +52,17 @@ const Wrapper = styled.aside`
     flex-direction: column;
     overflow-y: auto;
     overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
     gap: 1.25rem;
+  }
+
+  @media (max-width: 360px) {
+    .content {
+      width: 260px;
+      max-width: 88vw;
+      padding: 1rem 0.85rem;
+      gap: 1rem;
+    }
   }
 
   .show-sidebar .content {

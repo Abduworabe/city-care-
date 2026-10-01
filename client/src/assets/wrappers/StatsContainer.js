@@ -28,14 +28,14 @@ const Wrapper = styled.section`
 
   .stats-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.25rem;
     margin-bottom: 1.5rem;
   }
 
   .stats-summary {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: 1.25rem;
     margin-top: 1.5rem;
   }
@@ -121,20 +121,6 @@ const Wrapper = styled.section`
   .stats-grid > *:nth-child(2) { animation: fadeInUp 0.5s ease-out 0.15s both; }
   .stats-grid > *:nth-child(3) { animation: fadeInUp 0.5s ease-out 0.25s both; }
   .stats-grid > *:nth-child(4) { animation: fadeInUp 0.5s ease-out 0.35s both; }
-
-  @media (min-width: 640px) {
-    .stats-grid {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1.25rem;
-    }
-  }
-
-  @media (min-width: 992px) {
-    .stats-grid {
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1.5rem;
-    }
-  }
 
   @media (max-width: 480px) {
     .stats-grid {

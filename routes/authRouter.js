@@ -12,7 +12,7 @@ import {
 // ⭐️ Rate Limiter Configuration ⭐️
 const apiLimiter = rateLimiter({
   windowMs: 1 * 60 * 1000, // 1 minute
-  max: 50, // 50 requests per minute per IP
+  max: process.env.NODE_ENV === "production" ? 20 : 1000,
   message: { msg: "Too many requests, please try again in a minute." },
 });
 // -----------------------------------
